@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		530855EA194748450005484C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530855E9194748450005484C /* StoreKit.framework */; };
+		531C7362190DF47F00681D5E /* MotionEventRegulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 531C7361190DF47F00681D5E /* MotionEventRegulator.m */; };
+		531C7367190E3AB700681D5E /* my_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 531C7366190E3AB700681D5E /* my_arrow.png */; };
+		5380698518F920B700511FBA /* OverlayWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5380698418F920B700511FBA /* OverlayWindow.xib */; };
 		53D582B918E7D98A001030A9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D582B818E7D98A001030A9 /* Cocoa.framework */; };
 		53D582C318E7D98A001030A9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 53D582C118E7D98A001030A9 /* InfoPlist.strings */; };
 		53D582C518E7D98A001030A9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D582C418E7D98A001030A9 /* main.m */; };
@@ -18,6 +22,11 @@
 		53D582D918E7D98A001030A9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D582B818E7D98A001030A9 /* Cocoa.framework */; };
 		53D582E118E7D98A001030A9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 53D582DF18E7D98A001030A9 /* InfoPlist.strings */; };
 		53D582E318E7D98A001030A9 /* whereismymouseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D582E218E7D98A001030A9 /* whereismymouseTests.m */; };
+		53D582F018E8968D001030A9 /* OverlayWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D582EF18E8968D001030A9 /* OverlayWindow.m */; };
+		53D582F618E929D0001030A9 /* MotionEventRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D582F518E929D0001030A9 /* MotionEventRouter.m */; };
+		53D5830018E931E7001030A9 /* DisplayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D582FF18E931E7001030A9 /* DisplayManager.m */; };
+		53D5830318E9382C001030A9 /* MotionDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D5830218E9382C001030A9 /* MotionDetector.m */; };
+		53F6D82119430E8600E6B3BB /* GrandCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F6D82019430E8600E6B3BB /* GrandCircleView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +40,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		530855E81947482F0005484C /* whereismymouse.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = whereismymouse.entitlements; sourceTree = "<group>"; };
+		530855E9194748450005484C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		531C7360190DF47F00681D5E /* MotionEventRegulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionEventRegulator.h; sourceTree = "<group>"; };
+		531C7361190DF47F00681D5E /* MotionEventRegulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionEventRegulator.m; sourceTree = "<group>"; };
+		531C7363190E1DDA00681D5E /* testinput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = testinput.h; sourceTree = "<group>"; };
+		531C7366190E3AB700681D5E /* my_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = my_arrow.png; sourceTree = "<group>"; };
+		5380698418F920B700511FBA /* OverlayWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverlayWindow.xib; sourceTree = "<group>"; };
 		53D582B518E7D98A001030A9 /* whereismymouse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = whereismymouse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53D582B818E7D98A001030A9 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		53D582BB18E7D98A001030A9 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -50,6 +66,17 @@
 		53D582DE18E7D98A001030A9 /* whereismymouseTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "whereismymouseTests-Info.plist"; sourceTree = "<group>"; };
 		53D582E018E7D98A001030A9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		53D582E218E7D98A001030A9 /* whereismymouseTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = whereismymouseTests.m; sourceTree = "<group>"; };
+		53D582EE18E8968D001030A9 /* OverlayWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayWindow.h; sourceTree = "<group>"; };
+		53D582EF18E8968D001030A9 /* OverlayWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayWindow.m; sourceTree = "<group>"; };
+		53D582F418E929D0001030A9 /* MotionEventRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionEventRouter.h; sourceTree = "<group>"; };
+		53D582F518E929D0001030A9 /* MotionEventRouter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionEventRouter.m; sourceTree = "<group>"; };
+		53D582F718E92A6A001030A9 /* MouseEventObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MouseEventObserver.h; sourceTree = "<group>"; };
+		53D582FE18E931E6001030A9 /* DisplayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayManager.h; sourceTree = "<group>"; };
+		53D582FF18E931E7001030A9 /* DisplayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayManager.m; sourceTree = "<group>"; };
+		53D5830118E9382C001030A9 /* MotionDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionDetector.h; sourceTree = "<group>"; };
+		53D5830218E9382C001030A9 /* MotionDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionDetector.m; sourceTree = "<group>"; };
+		53F6D81F19430E8600E6B3BB /* GrandCircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrandCircleView.h; sourceTree = "<group>"; };
+		53F6D82019430E8600E6B3BB /* GrandCircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrandCircleView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +85,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				53D582B918E7D98A001030A9 /* Cocoa.framework in Frameworks */,
+				530855EA194748450005484C /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +123,7 @@
 		53D582B718E7D98A001030A9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				530855E9194748450005484C /* StoreKit.framework */,
 				53D582B818E7D98A001030A9 /* Cocoa.framework */,
 				53D582D718E7D98A001030A9 /* XCTest.framework */,
 				53D582BA18E7D98A001030A9 /* Other Frameworks */,
@@ -115,11 +144,16 @@
 		53D582BE18E7D98A001030A9 /* whereismymouse */ = {
 			isa = PBXGroup;
 			children = (
+				530855E81947482F0005484C /* whereismymouse.entitlements */,
+				53D582FB18E93122001030A9 /* LocationDisplay */,
+				53D582FA18E92C0A001030A9 /* MouseMotionDetection */,
+				53D582F918E92BD8001030A9 /* MouseMotionEvent */,
 				53D582CA18E7D98A001030A9 /* AppDelegate.h */,
 				53D582CB18E7D98A001030A9 /* AppDelegate.m */,
 				53D582CD18E7D98A001030A9 /* MainMenu.xib */,
 				53D582D018E7D98A001030A9 /* Images.xcassets */,
 				53D582BF18E7D98A001030A9 /* Supporting Files */,
+				531C7363190E1DDA00681D5E /* testinput.h */,
 			);
 			path = whereismymouse;
 			sourceTree = "<group>";
@@ -127,6 +161,7 @@
 		53D582BF18E7D98A001030A9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				531C7366190E3AB700681D5E /* my_arrow.png */,
 				53D582C018E7D98A001030A9 /* whereismymouse-Info.plist */,
 				53D582C118E7D98A001030A9 /* InfoPlist.strings */,
 				53D582C418E7D98A001030A9 /* main.m */,
@@ -152,6 +187,49 @@
 				53D582DF18E7D98A001030A9 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		53D582F918E92BD8001030A9 /* MouseMotionEvent */ = {
+			isa = PBXGroup;
+			children = (
+				53D582F418E929D0001030A9 /* MotionEventRouter.h */,
+				53D582F518E929D0001030A9 /* MotionEventRouter.m */,
+				53D582F718E92A6A001030A9 /* MouseEventObserver.h */,
+			);
+			name = MouseMotionEvent;
+			sourceTree = "<group>";
+		};
+		53D582FA18E92C0A001030A9 /* MouseMotionDetection */ = {
+			isa = PBXGroup;
+			children = (
+				531C7360190DF47F00681D5E /* MotionEventRegulator.h */,
+				531C7361190DF47F00681D5E /* MotionEventRegulator.m */,
+				53D5830118E9382C001030A9 /* MotionDetector.h */,
+				53D5830218E9382C001030A9 /* MotionDetector.m */,
+			);
+			name = MouseMotionDetection;
+			sourceTree = "<group>";
+		};
+		53D582FB18E93122001030A9 /* LocationDisplay */ = {
+			isa = PBXGroup;
+			children = (
+				53F6D81E19430E5B00E6B3BB /* GrandCircle */,
+				53D582EE18E8968D001030A9 /* OverlayWindow.h */,
+				53D582EF18E8968D001030A9 /* OverlayWindow.m */,
+				53D582FE18E931E6001030A9 /* DisplayManager.h */,
+				53D582FF18E931E7001030A9 /* DisplayManager.m */,
+				5380698418F920B700511FBA /* OverlayWindow.xib */,
+			);
+			name = LocationDisplay;
+			sourceTree = "<group>";
+		};
+		53F6D81E19430E5B00E6B3BB /* GrandCircle */ = {
+			isa = PBXGroup;
+			children = (
+				53F6D81F19430E8600E6B3BB /* GrandCircleView.h */,
+				53F6D82019430E8600E6B3BB /* GrandCircleView.m */,
+			);
+			name = GrandCircle;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,6 +279,17 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Choi Wonjoon";
 				TargetAttributes = {
+					53D582B418E7D98A001030A9 = {
+						DevelopmentTeam = 59WVM99KN6;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
+					};
 					53D582D518E7D98A001030A9 = {
 						TestTargetID = 53D582B418E7D98A001030A9;
 					};
@@ -233,7 +322,9 @@
 				53D582C318E7D98A001030A9 /* InfoPlist.strings in Resources */,
 				53D582D118E7D98A001030A9 /* Images.xcassets in Resources */,
 				53D582C918E7D98A001030A9 /* Credits.rtf in Resources */,
+				531C7367190E3AB700681D5E /* my_arrow.png in Resources */,
 				53D582CF18E7D98A001030A9 /* MainMenu.xib in Resources */,
+				5380698518F920B700511FBA /* OverlayWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,6 +345,12 @@
 			files = (
 				53D582CC18E7D98A001030A9 /* AppDelegate.m in Sources */,
 				53D582C518E7D98A001030A9 /* main.m in Sources */,
+				531C7362190DF47F00681D5E /* MotionEventRegulator.m in Sources */,
+				53D582F018E8968D001030A9 /* OverlayWindow.m in Sources */,
+				53D582F618E929D0001030A9 /* MotionEventRouter.m in Sources */,
+				53F6D82119430E8600E6B3BB /* GrandCircleView.m in Sources */,
+				53D5830018E931E7001030A9 /* DisplayManager.m in Sources */,
+				53D5830318E9382C001030A9 /* MotionDetector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,6 +424,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -345,6 +443,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "DFE502AB-305A-49A8-8D38-F97EF8E1F44F";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -365,6 +464,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -377,6 +477,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PROVISIONING_PROFILE = "DFE502AB-305A-49A8-8D38-F97EF8E1F44F";
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -385,11 +486,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = whereismymouse/whereismymouse.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer: Wonjoon Choi (2YZ8KNA295)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "whereismymouse/whereismymouse-Prefix.pch";
 				INFOPLIST_FILE = "whereismymouse/whereismymouse-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -398,11 +503,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = whereismymouse/whereismymouse.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer: Wonjoon Choi (2YZ8KNA295)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "whereismymouse/whereismymouse-Prefix.pch";
 				INFOPLIST_FILE = "whereismymouse/whereismymouse-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -466,6 +575,7 @@
 				53D582E818E7D98A001030A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		53D582E918E7D98A001030A9 /* Build configuration list for PBXNativeTarget "whereismymouseTests" */ = {
 			isa = XCConfigurationList;
@@ -474,6 +584,7 @@
 				53D582EB18E7D98A001030A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

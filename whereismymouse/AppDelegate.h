@@ -7,9 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MotionEventRouter.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
+@property (weak) IBOutlet NSMenu *statusMenu;
+@property (strong, nonatomic) NSStatusItem *statusBar;
+@property (strong, nonatomic) MotionEventRouter* mouseEventRouter;
+@property (weak) IBOutlet NSMenuItem *menuEnableShake;
 
 @end
