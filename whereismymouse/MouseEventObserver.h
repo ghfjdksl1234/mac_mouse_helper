@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Choi Wonjoon. All rights reserved.
 //
 #import <Foundation/Foundation.h>
-
+#import "MouseEvent.h"
 @protocol MouseEventObserver <NSObject>
-- (void) onMoveWithTimestamp:(NSTimeInterval)timestamp posX:(CGFloat)x posY:(CGFloat)y;
+- (void) onMoveWithEvent:(MouseEvent*) event;
 @end

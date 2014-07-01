@@ -16,7 +16,10 @@
 @end
 
 @implementation MotionEventRegulator
-- (BOOL) nextWithTimestamp:(NSTimeInterval)timestamp posX:(CGFloat)x posY:(CGFloat)y pointObject:(CGPoint*)point {
+- (BOOL) nextWithMouseEvent:(MouseEvent*)event pointObject:(CGPoint*)point {
+    NSTimeInterval timestamp = [event getTimestamp];
+    CGFloat x = [event getX];
+    CGFloat y = [event getY];
     BOOL newPoint = NO;
     if (point != nil) {
         double tolerance = [self getToleranceDistance];

@@ -7,25 +7,26 @@
 //
 
 #import "AppDelegate.h"
-#import "testinput.h"
+#import "MouseEvent.h"
+//#import "testinput.h"
 
 @interface AppDelegate()
 @property BOOL isEnabledShake;
 @end
-@implementation AppDelegate
 
+@implementation AppDelegate
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [self.menuEnableShake setState:NSOnState];
     self.isEnabledShake = YES;
     [self setStartAtLogin:YES];
-    self.mouseEventRouter = [[MotionEventRouter alloc] init];
-    // Insert code here to initialize your application
+    self.applicationManager = [[ApplicationManager alloc] init];
     
     [NSEvent addGlobalMonitorForEventsMatchingMask:NSMouseMovedMask handler:^(NSEvent* event) {
         NSPoint position = [NSEvent mouseLocation];
         if (self.isEnabledShake) {
-            [self.mouseEventRouter onMoveWithTimestamp:event.timestamp posX:position.x posY:position.y];
+            MouseEvent* mouseEvent = [[MouseEvent alloc] initWithTimestamp:event.timestamp posX:position.x posY:position.y];
+            [self.applicationManager onMoveWithEvent:mouseEvent];
         }
     }];
     /*/

@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MouseEvent.h"
 
 @interface MotionEventRegulator : NSObject
-- (BOOL) nextWithTimestamp:(NSTimeInterval)timestamp posX:(CGFloat)x posY:(CGFloat)y pointObject:(CGPoint*)point;
+- (BOOL) nextWithMouseEvent:(MouseEvent*)event pointObject:(CGPoint*)point;
 @end

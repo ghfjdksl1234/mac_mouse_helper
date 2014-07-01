@@ -1,5 +1,5 @@
 //
-//  MotionEventRouter.h
+//  MotionDetector.h
 //  whereismymouse
 //
 //  Created by Choi Wonjoon on 3/31/14.
@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import "MouseEventObserver.h"
-#import "MotionDetector.h"
-#import "DisplayManager.h"
 
-@interface MotionEventRouter : NSObject<MouseEventObserver, MotionEventObserver, DisplayEventObserver>
-- (id)init;
+@protocol ShakeObserver<NSObject>
+- (void)onShakeDetected;
+@end
+
+@interface ShakeDetector : NSObject<MouseEventObserver>
+- (void)addObserver:(NSObject<ShakeObserver>*)observer;
 @end

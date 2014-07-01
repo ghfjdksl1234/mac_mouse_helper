@@ -48,7 +48,10 @@
     }
 }
 
--(void)onMoveWithTimestamp:(NSTimeInterval)timestamp posX:(CGFloat)x posY:(CGFloat)y {
+-(void)onMoveWithEvent:(MouseEvent *)event {
+    NSTimeInterval timestamp = [event getTimestamp];
+    CGFloat x = [event getX];
+    CGFloat y = [event getY];
     switch (self.status) {
         case STATUS_SLEEP:
             self.startInterval = [[NSDate alloc] init].timeIntervalSince1970;

@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Choi Wonjoon. All rights reserved.
 //
 
-#import "MotionDetector.h"
+#import "ShakeDetector.h"
 #import "MotionEventRegulator.h"
 
 /* contrains */
@@ -41,7 +41,7 @@
 }
 @end
 
-@interface MotionDetector()
+@interface ShakeDetector()
 @property (strong, nonatomic) NSMutableArray* observerList;
 @property (strong, nonatomic) NSMutableArray* eventList;
 @property (strong, nonatomic) MotionEventRegulator* eventRegulator;
@@ -52,7 +52,7 @@
 @property int lastDirection;
 @end
 
-@implementation MotionDetector
+@implementation ShakeDetector
 -(id)init {
     self = [super init];
     if (self) {
@@ -64,12 +64,12 @@
     }
     return self;
 }
-- (void)addObserver:(NSObject<MotionEventObserver> *)observer {
+- (void)addObserver:(NSObject<ShakeObserver> *)observer {
     [self.observerList addObject:observer];
 }
 - (void)fireDetectionEvent {
-    for (NSObject<MotionEventObserver>* observer in self.observerList) {
-        [observer onMotionDetected];
+    for (NSObject<ShakeObserver>* observer in self.observerList) {
+        [observer onShakeDetected];
     }
 }
 - (void)clearEvent {
@@ -82,15 +82,18 @@
     self.lastDirection = DIRECTION_UNDEFINED;
 }
 
-- (void)onMoveWithTimestamp:(NSTimeInterval)timestamp posX:(CGFloat)x posY:(CGFloat)y {
-//    printf("{%lf, %lf, %lf},\n", timestamp, x, y);
-    CGPoint point;if (INPUT_TIME_BOUND < (timestamp-self.lastTimestamp)) {
-        //            printf("(%10.4f) / (%.2f)\n", (timestamp-self.lastTimestamp), fabs(self.lastX - x));
+- (void)onMoveWithEvent:(MouseEvent *)event {
+    CGPoint point;
+    NSTimeInterval timestamp = [event getTimestamp];
+    CGFloat x = [event getX];
+    CGFloat y = [event getY];
+    
+    if (INPUT_TIME_BOUND < (timestamp-self.lastTimestamp)) {
         [self clearEvent];
         self.lastEndX = x;
         self.lastX = x;
     }
-    if ([self.eventRegulator nextWithTimestamp:timestamp posX:x posY:y pointObject:&point]) {
+    if ([self.eventRegulator nextWithMouseEvent:event pointObject:&point]) {
 //        printf("(%10.4f) : x(%.2f), y(%.2f)\n", timestamp, x, y);
         int newDirection = DIRECTION_UNDEFINED;
         if (MIN_X_DISTANCE < fabs(self.lastEndX - x)) {

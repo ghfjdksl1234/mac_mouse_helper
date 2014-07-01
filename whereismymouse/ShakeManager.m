@@ -6,18 +6,18 @@
 //  Copyright (c) 2014 Choi Wonjoon. All rights reserved.
 //
 
-#import "MotionEventRouter.h"
-
+#import "ShakeManager.h"
+#import "ShakeDetector.h"
 #define STATUS_MOTION_DETECTING 0
 #define STATUS_DISPLAYING 1
 
-@interface MotionEventRouter()
-@property (strong, nonatomic) MotionDetector* motionDetector;
+@interface ShakeManager()
+@property (strong, nonatomic) ShakeDetector* shakeDetector;
 @property (strong, nonatomic) DisplayManager* displayManager;
 @property int status;
 @end
 
-@implementation MotionEventRouter
+@implementation ShakeManager
 -(id)init {
     self = [super init];
     if (self) {
@@ -28,8 +28,8 @@
     return self;
 }
 - (void)createMotionDetector {
-    self.motionDetector = [[MotionDetector alloc] init];
-    [self.motionDetector addObserver:self];
+    self.shakeDetector = [[ShakeDetector alloc] init];
+    [self.shakeDetector addObserver:self];
     
 }
 - (void)createDisplayManager {
@@ -37,17 +37,17 @@
     [self.displayManager addObserver:self];
 }
 
-- (void)onMoveWithTimestamp:(NSTimeInterval)timestamp posX:(CGFloat)x posY:(CGFloat)y {
+- (void)onMoveWithEvent:(MouseEvent *)event {
     switch (self.status) {
         case STATUS_MOTION_DETECTING:
-            [self.motionDetector onMoveWithTimestamp:timestamp posX:x posY:y];
+            [self.shakeDetector onMoveWithEvent:event];
             break;
         case STATUS_DISPLAYING:
-            [self.displayManager onMoveWithTimestamp:timestamp posX:x posY:y];
+            [self.displayManager onMoveWithEvent:event];
             break;
     }
 }
-- (void)onMotionDetected {
+- (void)onShakeDetected {
     self.status = STATUS_DISPLAYING;
 }
 - (void)onStartDisplay {
