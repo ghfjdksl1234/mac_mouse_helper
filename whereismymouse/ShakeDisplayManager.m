@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Choi Wonjoon. All rights reserved.
 //
 
-#import "DisplayManager.h"
+#import "ShakeDisplayManager.h"
 #import "OverlayWindow.h"
 
 #define STATUS_SLEEP 0
@@ -14,7 +14,7 @@
 
 #define TIME_DISPLAY_IN_SEC (1.5)
 
-@interface DisplayManager()
+@interface ShakeDisplayManager()
 @property NSTimeInterval startInterval;
 @property NSPoint center;
 @property CGFloat maxRadius;
@@ -23,7 +23,7 @@
 @property int status;
 @end
 
-@implementation DisplayManager
+@implementation ShakeDisplayManager
 -(id)init {
     self = [super init];
     if (self) {
@@ -72,10 +72,8 @@
         OverlayWindow* window = (OverlayWindow*) controller.window;
         [window updateWithCenter:self.center radius:radius];
     }
-    
 }
 - (void)createWindowsWithCenter:(NSPoint) center {
-//    [NSStatusBar systemStatusBar]
     NSPoint origin, end;
     for(NSScreen* screen in [NSScreen screens]) {
 //        NSRect frame = screen.visibleFrame;

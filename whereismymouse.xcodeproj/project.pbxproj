@@ -27,7 +27,7 @@
 		53D582E318E7D98A001030A9 /* whereismymouseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D582E218E7D98A001030A9 /* whereismymouseTests.m */; };
 		53D582F018E8968D001030A9 /* OverlayWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D582EF18E8968D001030A9 /* OverlayWindow.m */; };
 		53D582F618E929D0001030A9 /* ShakeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D582F518E929D0001030A9 /* ShakeManager.m */; };
-		53D5830018E931E7001030A9 /* DisplayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D582FF18E931E7001030A9 /* DisplayManager.m */; };
+		53D5830018E931E7001030A9 /* ShakeDisplayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D582FF18E931E7001030A9 /* ShakeDisplayManager.m */; };
 		53D5830318E9382C001030A9 /* ShakeDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D5830218E9382C001030A9 /* ShakeDetector.m */; };
 		53F6D82119430E8600E6B3BB /* GrandCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F6D82019430E8600E6B3BB /* GrandCircleView.m */; };
 /* End PBXBuildFile section */
@@ -80,8 +80,8 @@
 		53D582F418E929D0001030A9 /* ShakeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShakeManager.h; sourceTree = "<group>"; };
 		53D582F518E929D0001030A9 /* ShakeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShakeManager.m; sourceTree = "<group>"; };
 		53D582F718E92A6A001030A9 /* MouseEventObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MouseEventObserver.h; sourceTree = "<group>"; };
-		53D582FE18E931E6001030A9 /* DisplayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayManager.h; sourceTree = "<group>"; };
-		53D582FF18E931E7001030A9 /* DisplayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayManager.m; sourceTree = "<group>"; };
+		53D582FE18E931E6001030A9 /* ShakeDisplayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShakeDisplayManager.h; sourceTree = "<group>"; };
+		53D582FF18E931E7001030A9 /* ShakeDisplayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShakeDisplayManager.m; sourceTree = "<group>"; };
 		53D5830118E9382C001030A9 /* ShakeDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShakeDetector.h; sourceTree = "<group>"; };
 		53D5830218E9382C001030A9 /* ShakeDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShakeDetector.m; sourceTree = "<group>"; };
 		53F6D81F19430E8600E6B3BB /* GrandCircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrandCircleView.h; sourceTree = "<group>"; };
@@ -110,6 +110,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5317A9FA19691203001554E8 /* Detection */ = {
+			isa = PBXGroup;
+			children = (
+				531C7360190DF47F00681D5E /* MotionEventRegulator.h */,
+				531C7361190DF47F00681D5E /* MotionEventRegulator.m */,
+				53D5830118E9382C001030A9 /* ShakeDetector.h */,
+				53D5830218E9382C001030A9 /* ShakeDetector.m */,
+			);
+			name = Detection;
+			sourceTree = "<group>";
+		};
 		53D582AC18E7D98A001030A9 = {
 			isa = PBXGroup;
 			children = (
@@ -215,12 +226,10 @@
 		53D582FA18E92C0A001030A9 /* ShakeManagement */ = {
 			isa = PBXGroup;
 			children = (
-				531C7360190DF47F00681D5E /* MotionEventRegulator.h */,
+				5317A9FA19691203001554E8 /* Detection */,
+				53F6D81E19430E5B00E6B3BB /* Display */,
 				53D582F418E929D0001030A9 /* ShakeManager.h */,
 				53D582F518E929D0001030A9 /* ShakeManager.m */,
-				531C7361190DF47F00681D5E /* MotionEventRegulator.m */,
-				53D5830118E9382C001030A9 /* ShakeDetector.h */,
-				53D5830218E9382C001030A9 /* ShakeDetector.m */,
 			);
 			name = ShakeManagement;
 			sourceTree = "<group>";
@@ -228,23 +237,22 @@
 		53D582FB18E93122001030A9 /* LocationDisplay */ = {
 			isa = PBXGroup;
 			children = (
-				53F6D81E19430E5B00E6B3BB /* GrandCircle */,
 				53D582EE18E8968D001030A9 /* OverlayWindow.h */,
 				53D582EF18E8968D001030A9 /* OverlayWindow.m */,
-				53D582FE18E931E6001030A9 /* DisplayManager.h */,
-				53D582FF18E931E7001030A9 /* DisplayManager.m */,
 				5380698418F920B700511FBA /* OverlayWindow.xib */,
 			);
 			name = LocationDisplay;
 			sourceTree = "<group>";
 		};
-		53F6D81E19430E5B00E6B3BB /* GrandCircle */ = {
+		53F6D81E19430E5B00E6B3BB /* Display */ = {
 			isa = PBXGroup;
 			children = (
+				53D582FE18E931E6001030A9 /* ShakeDisplayManager.h */,
+				53D582FF18E931E7001030A9 /* ShakeDisplayManager.m */,
 				53F6D81F19430E8600E6B3BB /* GrandCircleView.h */,
 				53F6D82019430E8600E6B3BB /* GrandCircleView.m */,
 			);
-			name = GrandCircle;
+			name = Display;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -366,7 +374,7 @@
 				53D582F618E929D0001030A9 /* ShakeManager.m in Sources */,
 				53F6D82119430E8600E6B3BB /* GrandCircleView.m in Sources */,
 				5320C7F21962AE4100393E5D /* MouseEvent.m in Sources */,
-				53D5830018E931E7001030A9 /* DisplayManager.m in Sources */,
+				53D5830018E931E7001030A9 /* ShakeDisplayManager.m in Sources */,
 				5320C7EF1962ADFC00393E5D /* MouseEventDistributor.m in Sources */,
 				53D5830318E9382C001030A9 /* ShakeDetector.m in Sources */,
 			);

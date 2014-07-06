@@ -13,7 +13,7 @@
 
 @interface ShakeManager()
 @property (strong, nonatomic) ShakeDetector* shakeDetector;
-@property (strong, nonatomic) DisplayManager* displayManager;
+@property (strong, nonatomic) ShakeDisplayManager* displayManager;
 @property int status;
 @end
 
@@ -33,7 +33,7 @@
     
 }
 - (void)createDisplayManager {
-    self.displayManager = [[DisplayManager alloc] init];
+    self.displayManager = [[ShakeDisplayManager alloc] init];
     [self.displayManager addObserver:self];
 }
 

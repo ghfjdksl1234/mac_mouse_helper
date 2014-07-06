@@ -10,7 +10,7 @@
 
 #import "MouseEventObserver.h"
 #import "ShakeDetector.h"
-#import "DisplayManager.h"
+#import "ShakeDisplayManager.h"
 
 @interface ShakeManager : NSObject<MouseEventObserver, ShakeObserver, DisplayEventObserver>
 - (id)init;

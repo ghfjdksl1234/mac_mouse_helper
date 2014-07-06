@@ -14,6 +14,6 @@
 - (void)onEndDisplay;
 @end
 
-@interface DisplayManager : NSObject<MouseEventObserver>
+@interface ShakeDisplayManager : NSObject<MouseEventObserver>
 - (void)addObserver:(NSObject<DisplayEventObserver>*)observer;
 @end
