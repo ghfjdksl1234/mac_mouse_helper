@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		530855EA194748450005484C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530855E9194748450005484C /* StoreKit.framework */; };
+		5317AA00196913CC001554E8 /* DisplayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5317A9FF196913CC001554E8 /* DisplayManager.m */; };
 		531C7362190DF47F00681D5E /* MotionEventRegulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 531C7361190DF47F00681D5E /* MotionEventRegulator.m */; };
 		531C7367190E3AB700681D5E /* my_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 531C7366190E3AB700681D5E /* my_arrow.png */; };
 		5320C7EF1962ADFC00393E5D /* MouseEventDistributor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5320C7EE1962ADFC00393E5D /* MouseEventDistributor.m */; };
@@ -45,6 +46,8 @@
 /* Begin PBXFileReference section */
 		530855E81947482F0005484C /* whereismymouse.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = whereismymouse.entitlements; sourceTree = "<group>"; };
 		530855E9194748450005484C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		5317A9FE196913CC001554E8 /* DisplayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayManager.h; sourceTree = "<group>"; };
+		5317A9FF196913CC001554E8 /* DisplayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayManager.m; sourceTree = "<group>"; };
 		531C7360190DF47F00681D5E /* MotionEventRegulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionEventRegulator.h; sourceTree = "<group>"; };
 		531C7361190DF47F00681D5E /* MotionEventRegulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionEventRegulator.m; sourceTree = "<group>"; };
 		531C7363190E1DDA00681D5E /* testinput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = testinput.h; sourceTree = "<group>"; };
@@ -165,7 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				530855E81947482F0005484C /* whereismymouse.entitlements */,
-				53D582FB18E93122001030A9 /* LocationDisplay */,
+				53D582FB18E93122001030A9 /* DisplayManager */,
 				53D582FA18E92C0A001030A9 /* ShakeManagement */,
 				53D582F918E92BD8001030A9 /* MouseMotionEvent */,
 				53D582CA18E7D98A001030A9 /* AppDelegate.h */,
@@ -234,14 +237,16 @@
 			name = ShakeManagement;
 			sourceTree = "<group>";
 		};
-		53D582FB18E93122001030A9 /* LocationDisplay */ = {
+		53D582FB18E93122001030A9 /* DisplayManager */ = {
 			isa = PBXGroup;
 			children = (
 				53D582EE18E8968D001030A9 /* OverlayWindow.h */,
 				53D582EF18E8968D001030A9 /* OverlayWindow.m */,
 				5380698418F920B700511FBA /* OverlayWindow.xib */,
+				5317A9FE196913CC001554E8 /* DisplayManager.h */,
+				5317A9FF196913CC001554E8 /* DisplayManager.m */,
 			);
-			name = LocationDisplay;
+			name = DisplayManager;
 			sourceTree = "<group>";
 		};
 		53F6D81E19430E5B00E6B3BB /* Display */ = {
@@ -370,6 +375,7 @@
 				53D582C518E7D98A001030A9 /* main.m in Sources */,
 				531C7362190DF47F00681D5E /* MotionEventRegulator.m in Sources */,
 				53D582F018E8968D001030A9 /* OverlayWindow.m in Sources */,
+				5317AA00196913CC001554E8 /* DisplayManager.m in Sources */,
 				5320C7F51962B5D300393E5D /* ApplicationManager.m in Sources */,
 				53D582F618E929D0001030A9 /* ShakeManager.m in Sources */,
 				53F6D82119430E8600E6B3BB /* GrandCircleView.m in Sources */,

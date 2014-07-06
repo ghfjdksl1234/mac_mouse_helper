@@ -9,5 +9,6 @@
 #import <Cocoa/Cocoa.h>
 
 @interface GrandCircleView : NSView
--(void)updatePositionWithCenter:(NSPoint)center radius:(CGFloat)radius;
+- (id)initWithFrame:(NSRect)frame orgX:(CGFloat)x orgY:(CGFloat)y;
+- (void)updateWithCenter:(NSPoint)center radius:(CGFloat)radius;
 @end

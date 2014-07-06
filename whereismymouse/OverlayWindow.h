@@ -10,6 +10,4 @@
 #import "MouseEventObserver.h"
 
 @interface OverlayWindow : NSWindow
-- (void)initOriginWithPosX:(CGFloat)x posY:(CGFloat)y;
-- (void)updateWithCenter:(NSPoint)center radius:(CGFloat)radius;
 @end

@@ -8,6 +8,8 @@
 
 #import "ShakeDisplayManager.h"
 #import "OverlayWindow.h"
+#import "GrandCircleView.h"
+#import "DisplayManager.h"
 
 #define STATUS_SLEEP 0
 #define STATUS_DISPLAY 1
@@ -18,17 +20,23 @@
 @property NSTimeInterval startInterval;
 @property NSPoint center;
 @property CGFloat maxRadius;
-@property (strong, nonatomic)NSMutableArray* windowControllerList;
+@property (strong, nonatomic)NSMutableArray* viewList;
 @property (strong, nonatomic)NSMutableArray* observerList;
 @property int status;
+@end
+
+@interface LocalItem : NSObject
+@property (strong, nonatomic)GrandCircleView* view;
+@property int screenNo;
+- (id)initWithView:(NSView*)view screenNo:(int)screenNo;
 @end
 
 @implementation ShakeDisplayManager
 -(id)init {
     self = [super init];
     if (self) {
+        self.viewList = [[NSMutableArray alloc] init];
         self.observerList = [[NSMutableArray alloc] init];
-        self.windowControllerList = [[NSMutableArray alloc] init];
 
         self.status = STATUS_SLEEP;
     }
@@ -49,7 +57,6 @@
 }
 
 -(void)onMoveWithEvent:(MouseEvent *)event {
-    NSTimeInterval timestamp = [event getTimestamp];
     CGFloat x = [event getX];
     CGFloat y = [event getY];
     switch (self.status) {
@@ -68,13 +75,14 @@
 -(void)update {
     NSTimeInterval now = [[NSDate alloc] init].timeIntervalSince1970;
     CGFloat radius = self.maxRadius * (TIME_DISPLAY_IN_SEC - (now - self.startInterval)) / TIME_DISPLAY_IN_SEC;
-    for(NSWindowController* controller in self.windowControllerList) {
-        OverlayWindow* window = (OverlayWindow*) controller.window;
-        [window updateWithCenter:self.center radius:radius];
+
+    for(LocalItem* item in self.viewList) {
+        [item.view updateWithCenter:self.center radius:radius];
     }
 }
 - (void)createWindowsWithCenter:(NSPoint) center {
     NSPoint origin, end;
+    int index = 0;
     for(NSScreen* screen in [NSScreen screens]) {
 //        NSRect frame = screen.visibleFrame;
         NSRect frame = screen.frame;
@@ -94,14 +102,10 @@
         }
         
         NSRect rect = NSMakeRect(frame.origin.x, frame.origin.y, frame.size.width,  frame.size.height);
-        
-        NSWindowController *windowController = [[NSWindowController alloc] initWithWindowNibName:@"OverlayWindow"];
-        OverlayWindow *window = (OverlayWindow*)windowController.window;
-        [window setFrame:rect display:YES];
-        [window makeKeyAndOrderFront: nil];
-        [window initOriginWithPosX:frame.origin.x posY:frame.origin.y];
-        
-        [self.windowControllerList addObject:windowController];
+        GrandCircleView* view = [[GrandCircleView alloc] initWithFrame:rect orgX:frame.origin.x orgY:frame.origin.y];
+        [[DisplayManager getInstance] addView:view screenNo:index];
+        [self.viewList addObject:[[LocalItem alloc] initWithView:view screenNo:index]];
+        index++;
     }
     CGFloat xDist = MAX(ABS(center.x - origin.x), ABS(center.x - end.x));
     CGFloat yDist = MAX(ABS(center.y - origin.y), ABS(center.y - end.y));
@@ -110,7 +114,7 @@
 - (void)onTimer {
     NSTimeInterval now = [[NSDate alloc] init].timeIntervalSince1970;
     if (TIME_DISPLAY_IN_SEC <= now - self.startInterval) {
-        [self destroyWindows];
+        [self destroyViews];
         [self fireEventEndDisplay];
         self.status = STATUS_SLEEP;
     } else {
@@ -118,13 +122,22 @@
         [NSTimer scheduledTimerWithTimeInterval:0.00001 target:self selector:@selector(onTimer) userInfo:nil repeats:NO];
     }
 }
-- (void)destroyWindows {
-    for (NSWindowController* controller in self.windowControllerList) {
-        [controller close];
+- (void)destroyViews {
+    for (LocalItem* item in self.viewList) {
+        [[DisplayManager getInstance] removeView:item.view screenNo:item.screenNo];
     }
-    [self.windowControllerList removeAllObjects];
+    [self.viewList removeAllObjects];
 }
 - (void)setTimer {
     [NSTimer scheduledTimerWithTimeInterval:0.00001 target:self selector:@selector(onTimer) userInfo:nil repeats:NO];
 }
+@end
+
+@implementation LocalItem
+-(id)initWithView:(GrandCircleView *)view screenNo:(int)screenNo {
+    self.view = view;
+    self.screenNo = screenNo;
+    return self;
+}
+
 @end

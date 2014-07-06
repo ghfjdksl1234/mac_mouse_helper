@@ -31,13 +31,4 @@
 - (void)awakeFromNib {
 }
 
-- (void)initOriginWithPosX:(CGFloat)x posY:(CGFloat)y {
-    self.orgX = x;
-    self.orgY = y;
-}
-- (void)updateWithCenter:(NSPoint)center radius:(CGFloat)radius {
-    GrandCircleView* view = (GrandCircleView*)self.contentView;
-    [view updatePositionWithCenter:NSMakePoint(center.x-self.orgX, center.y-self.orgY) radius:radius];
-    [view setNeedsDisplay:YES];
-}
 @end

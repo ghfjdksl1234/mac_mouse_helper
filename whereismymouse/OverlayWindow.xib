@@ -15,7 +15,7 @@
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="1044" height="610"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
-            <view key="contentView" id="EiT-Mj-1SZ" userLabel="View" customClass="GrandCircleView">
+            <view key="contentView" id="EiT-Mj-1SZ" userLabel="View">
                 <rect key="frame" x="0.0" y="0.0" width="1044" height="610"/>
                 <autoresizingMask key="autoresizingMask"/>
             </view>

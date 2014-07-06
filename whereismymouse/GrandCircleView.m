@@ -9,24 +9,34 @@
 #import "GrandCircleView.h"
 
 @interface GrandCircleView()
-@property CGFloat x, y;
+@property CGFloat orgX, orgY, x, y;
 @property CGFloat radius;
 @end
 
 @implementation GrandCircleView
 
-- (id)initWithFrame:(NSRect)frame
-{
+- (id)initWithFrame:(NSRect)frame orgX:(CGFloat)x orgY:(CGFloat)y {
     self = [super initWithFrame:frame];
     if (self) {
         [self setAlphaValue:1]; // It'll start out mostly transparent
-
+        self.orgX = x;
+        self.orgY = y;
     }
     return self;
+}
+- (void)updateWithCenter:(NSPoint)center radius:(CGFloat)radius {
+    self.x = center.x-self.orgX;
+    self.y = center.y-self.orgY;
+    self.radius = radius;
+    [self setNeedsDisplay:YES];
 }
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+//    self.x = self.y = 200;
+//    self.radius = 150;
+    
+    
     [super drawRect:dirtyRect];
 
     NSArray* colors = @[[NSColor redColor], [NSColor yellowColor]];
@@ -49,13 +59,5 @@
 //    // Outline and fill the path
 //    [circlePath stroke];
     
-}
-
--(void)updatePositionWithCenter:(NSPoint)center radius:(CGFloat)radius {
-    //printf("update : (%5.2f, %5.2f) %6.2f\n%s", center.x, center.y, radius);
-    self.x = center.x;
-    self.y = center.y;
-    self.radius = radius;
-    [self setNeedsDisplay:YES];
 }
 @end

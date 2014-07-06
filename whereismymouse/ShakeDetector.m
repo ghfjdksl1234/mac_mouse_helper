@@ -117,7 +117,7 @@
             //                [self.eventList filterUsingPredicate:predicate];
             //                [self.eventList addObject:[NSNumber numberWithDouble:timestamp]];
             int index;
-            for (index = self.eventList.count - 1 ; 0 <= index ; index--) {
+            for (index = (int)self.eventList.count - 1 ; 0 <= index ; index--) {
                 EventLogObject *event = self.eventList[index];
                 if (TOTAL_TIME_BOUND < (timestamp - event.timestamp) || MAX_X_DISTANCE < fabs(event.x - x)) {
                     break;
