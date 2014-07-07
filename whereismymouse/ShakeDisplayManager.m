@@ -62,7 +62,7 @@
     switch (self.status) {
         case STATUS_SLEEP:
             self.startInterval = [[NSDate alloc] init].timeIntervalSince1970;
-            [self createWindowsWithCenter:NSMakePoint(x, y)];
+            [self createViewsWithCenter:NSMakePoint(x, y)];
             [self setTimer];
             [self fireEventStartDisplay];
             self.status = STATUS_DISPLAY;
@@ -80,7 +80,7 @@
         [item.view updateWithCenter:self.center radius:radius];
     }
 }
-- (void)createWindowsWithCenter:(NSPoint) center {
+- (void)createViewsWithCenter:(NSPoint) center {
     NSPoint origin, end;
     int index = 0;
     for(NSScreen* screen in [NSScreen screens]) {
@@ -101,7 +101,7 @@
             end.y = frame.origin.y+frame.size.height;
         }
         
-        NSRect rect = NSMakeRect(frame.origin.x, frame.origin.y, frame.size.width,  frame.size.height);
+        NSRect rect = NSMakeRect(0, 0, frame.size.width,  frame.size.height);
         GrandCircleView* view = [[GrandCircleView alloc] initWithFrame:rect orgX:frame.origin.x orgY:frame.origin.y];
         [[DisplayManager getInstance] addView:view screenNo:index];
         [self.viewList addObject:[[LocalItem alloc] initWithView:view screenNo:index]];
