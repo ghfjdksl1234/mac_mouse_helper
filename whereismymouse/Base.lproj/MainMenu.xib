@@ -13,6 +13,7 @@
         <customObject id="-3" userLabel="Application"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
+                <outlet property="menuEnableCross" destination="jik-Op-KST" id="BTA-hG-Pii"/>
                 <outlet property="menuEnableShake" destination="lcR-cZ-T5Y" id="Qas-Uh-Nrz"/>
                 <outlet property="statusMenu" destination="qcO-NG-GwZ" id="6fA-jM-iJr"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
@@ -33,10 +34,16 @@
                 <menuItem title="Where is my mouse Help" id="e8W-2B-kZD">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
-                <menuItem title="Enable" id="lcR-cZ-T5Y">
+                <menuItem title="Enable Shaking Mouse" id="lcR-cZ-T5Y">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="onEnableShake:" target="Voe-Tx-rLC" id="zoi-pt-s4u"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Enable Crossing Monitors Helper" id="jik-Op-KST">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="onEnableCross:" target="Voe-Tx-rLC" id="32F-Fz-Xkz"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="DSX-7v-M7D"/>

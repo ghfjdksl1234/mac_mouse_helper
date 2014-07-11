@@ -16,5 +16,6 @@
 @property (strong, nonatomic) NSStatusItem *statusBar;
 @property (strong, nonatomic) ApplicationManager* applicationManager;
 @property (weak) IBOutlet NSMenuItem *menuEnableShake;
+@property (weak) IBOutlet NSMenuItem *menuEnableCross;
 
 @end

@@ -11,23 +11,28 @@
 //#import "testinput.h"
 
 @interface AppDelegate()
-@property BOOL isEnabledShake;
 @end
 
 @implementation AppDelegate
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [self.menuEnableShake setState:NSOnState];
-    self.isEnabledShake = YES;
+    [self.menuEnableCross setState:NSOnState];
     [self setStartAtLogin:YES];
     self.applicationManager = [[ApplicationManager alloc] init];
     
+//    static int roundCount = 0;
     [NSEvent addGlobalMonitorForEventsMatchingMask:NSMouseMovedMask handler:^(NSEvent* event) {
+        //the code commented below is for energy effiency. but I think it's not a matter. So I commented it.
+//        roundCount = (roundCount+1)%3;
+//        if (0 < roundCount) {
+//            return;
+//        }
         NSPoint position = [NSEvent mouseLocation];
-        if (self.isEnabledShake) {
-            MouseEvent* mouseEvent = [[MouseEvent alloc] initWithTimestamp:event.timestamp posX:position.x posY:position.y];
-            [self.applicationManager onMoveWithEvent:mouseEvent];
-        }
+        MouseEvent* mouseEvent = [[MouseEvent alloc] initWithTimestamp:event.timestamp posX:position.x posY:position.y];
+        [self.applicationManager onMoveWithEvent:mouseEvent];
+        
+//        printf("(%10.4f) : x(%f), y(%f)\n", event.timestamp, position.x, position.y);
     }];
     /*/
     for (int i = 0 ; i < sizeof(testInput) / sizeof(testInput[0]) ; i++) {
@@ -43,17 +48,33 @@
     self.statusBar.highlightMode = YES;
 }
 - (IBAction)onEnableShake:(id)sender {
+    BOOL enable = YES;
     switch (self.menuEnableShake.state) {
         case NSOnState:
             [self.menuEnableShake setState:NSOffState];
-            self.isEnabledShake = NO;
+            enable = NO;
             break;
         case NSOffState:
             [self.menuEnableShake setState:NSOnState];
-            self.isEnabledShake = YES;
+            enable = YES;
             break;
     }
-    
+    [self.applicationManager setEnableShake:enable];
+}
+
+- (IBAction)onEnableCross:(id)sender {
+    BOOL enable = YES;
+    switch (self.menuEnableCross.state) {
+        case NSOnState:
+            [self.menuEnableCross setState:NSOffState];
+            enable = NO;
+            break;
+        case NSOffState:
+            [self.menuEnableCross setState:NSOnState];
+            enable = YES;
+            break;
+    }
+    [self.applicationManager setEnableCross:enable];
 }
 
 + (BOOL) willStartAtLogin:(NSURL *)itemURL
@@ -132,7 +153,5 @@
     [self willChangeValueForKey:@"startAtLogin"];
     [AppDelegate setStartAtLogin:[self appURL] enabled:enabled];
     [self didChangeValueForKey:@"startAtLogin"];
-}
-- (IBAction)menuEnableShake:(NSMenuItem *)sender {
 }
 @end

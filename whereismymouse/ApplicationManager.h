@@ -11,4 +11,6 @@
 
 @interface ApplicationManager : NSObject<MouseEventObserver>
 - (id) init;
+- (void) setEnableShake:(BOOL)enable;
+- (void) setEnableCross:(BOOL)enable;
 @end
