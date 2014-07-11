@@ -41,6 +41,9 @@
     }
     /**/
 }
+- (void)applicationDidChangeScreenParameters:(NSNotification *)notification {
+    self.applicationManager = [[ApplicationManager alloc] init];
+}
 - (void)awakeFromNib {
     self.statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     self.statusBar.title = @"WMouse";
