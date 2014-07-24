@@ -13,4 +13,9 @@
 - (id) init;
 - (void) setEnableShake:(BOOL)enable;
 - (void) setEnableCross:(BOOL)enable;
+//- (void) setEnableCenterAtWakeup:(BOOL)enable;
+
++ (void) moveMouseToGlobalPos:(CGPoint)point;
+
+- (void)didChangeScreenParameters:(NSNotification *)notification;
 @end

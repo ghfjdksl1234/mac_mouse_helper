@@ -7,6 +7,7 @@
 //
 
 #import "EdgeCrossHelper.h"
+#import "ApplicationManager.h"
 
 #define PRECISION 1
 #define MOVE_BUFFER_POINT 25
@@ -102,7 +103,6 @@
     if (pos1 == pos2 && size1 == size2) {
         return;
     }
-    
     if (pos1 + size1 == pos2 &&
         range1.start <= range2.end &&
         range2.start <= range1.end) {
@@ -135,9 +135,10 @@
         } else {
             x -= 5;
         }
+        
         newPos = ((NSScreen*)[[NSScreen screens] objectAtIndex:0]).frame.size.height - newPos;
-        CGWarpMouseCursorPosition(CGPointMake(x, newPos));
-        CGAssociateMouseAndMouseCursorPosition(true);
+        [ApplicationManager moveMouseToGlobalPos:CGPointMake(x, newPos)];
+//        CGWarpMouseCursorPosition(CGPointMake(x, newPos));
     } else {
         newPos = [EdgeCrossHelper getNewPosFor:y pos:x dic:self.horizontalByY];
         if (newPos != CGFLOAT_MAX) {
@@ -151,9 +152,10 @@
             } else {
                 y -= 5;
             }
+
             y = [NSScreen mainScreen].frame.size.height - y;
-            CGWarpMouseCursorPosition(CGPointMake(newPos, y));
-            CGAssociateMouseAndMouseCursorPosition(true);
+            [ApplicationManager moveMouseToGlobalPos:CGPointMake(newPos, y)];
+//            CGWarpMouseCursorPosition(CGPointMake(newPos, y));
         }
     }
 }
@@ -161,7 +163,7 @@
     CGFloat newPos = CGFLOAT_MAX;
     NSNumber* searchKey = nil;
     for (NSNumber* key in [dic allKeys]) {
-        if ((fabs)(key.doubleValue-keyValue)<PRECISION) {
+        if ((fabs)(key.floatValue-keyValue)<PRECISION) {
             searchKey = key;
             break;
         }
@@ -188,5 +190,8 @@
         }
     }
     return newPos;
+}
+-(void)didChangeScreenParameters:(NSNotification *)notification {
+    [self init];
 }
 @end

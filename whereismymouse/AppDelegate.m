@@ -42,11 +42,14 @@
     /**/
 }
 - (void)applicationDidChangeScreenParameters:(NSNotification *)notification {
-    self.applicationManager = [[ApplicationManager alloc] init];
+    if (self.applicationManager != nil) {
+        [self.applicationManager didChangeScreenParameters:notification];
+    }
 }
 - (void)awakeFromNib {
     self.statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
-    self.statusBar.title = @"WMouse";
+    self.statusBar.image = [NSImage imageNamed:@"statusbarmenu_icon.png"];
+//    self.statusBar.title = @"WMouse";
     self.statusBar.menu = self.statusMenu;
     self.statusBar.highlightMode = YES;
 }

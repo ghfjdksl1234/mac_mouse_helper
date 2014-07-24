@@ -10,11 +10,13 @@
 #import "MouseEventDistributor.h"
 #import "ShakeManager.h"
 #import "EdgeCrossHelper.h"
+#import "WakeupManager.h"
 
 @interface ApplicationManager()
 @property (strong, nonatomic) MouseEventDistributor* eventDistributor;
 @property (strong, nonatomic) ShakeManager* shakeManager;
 @property (strong, nonatomic) EdgeCrossHelper* crossHelper;
+//@property (strong, nonatomic) WakeupManager* wakeupManager;
 @end
 
 @implementation ApplicationManager
@@ -22,6 +24,8 @@
     self.eventDistributor = [[MouseEventDistributor alloc] init];
     [self setEnableShake:YES];
     [self setEnableCross:YES];
+    // Can't use below because of delay after wakeup
+//    [self setEnableCenterAtWakeup:YES];
     return self;
 }
 - (void)onMoveWithEvent:(MouseEvent *)event {
@@ -44,6 +48,28 @@
     } else if (enable == NO && self.crossHelper != nil) {
         [self.eventDistributor removeObserver:self.crossHelper];
         self.crossHelper = nil;
+    }
+}
+//- (void) setEnableCenterAtWakeup:(BOOL)enable {
+//    if (enable == YES && self.wakeupManager == nil) {
+//        self.wakeupManager = [[WakeupManager alloc] init];
+//        [self.eventDistributor addObserver:self.wakeupManager];
+//    } else if (enable == NO && self.wakeupManager != nil) {
+//        [self.eventDistributor removeObserver:self.wakeupManager];
+//        self.wakeupManager = nil;
+//    }
+//}
++(void)moveMouseToGlobalPos:(CGPoint)point {
+    CGDisplayHideCursor (kCGNullDirectDisplay);
+    CGAssociateMouseAndMouseCursorPosition (false);
+    CGDisplayMoveCursorToPoint(kCGNullDirectDisplay, point);
+    //        CGWarpMouseCursorPosition(CGPointMake(x, newPos));
+    CGAssociateMouseAndMouseCursorPosition(true);
+    CGDisplayShowCursor (kCGNullDirectDisplay);
+}
+- (void)didChangeScreenParameters:(NSNotification *)notification {
+    if (self.crossHelper != nil) {
+        [self.crossHelper didChangeScreenParameters:notification];
     }
 }
 @end

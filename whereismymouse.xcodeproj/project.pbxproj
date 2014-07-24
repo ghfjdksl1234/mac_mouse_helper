@@ -15,6 +15,8 @@
 		5320C7EF1962ADFC00393E5D /* MouseEventDistributor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5320C7EE1962ADFC00393E5D /* MouseEventDistributor.m */; };
 		5320C7F21962AE4100393E5D /* MouseEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 5320C7F11962AE4100393E5D /* MouseEvent.m */; };
 		5320C7F51962B5D300393E5D /* ApplicationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5320C7F41962B5D300393E5D /* ApplicationManager.m */; };
+		5360DDA419810156005B62DD /* WakeupManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5360DDA319810156005B62DD /* WakeupManager.m */; };
+		53748DAC196F823800B74301 /* statusbarmenu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 53748DAB196F823800B74301 /* statusbarmenu_icon.png */; };
 		5380698518F920B700511FBA /* OverlayWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5380698418F920B700511FBA /* OverlayWindow.xib */; };
 		53D582B918E7D98A001030A9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D582B818E7D98A001030A9 /* Cocoa.framework */; };
 		53D582C318E7D98A001030A9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 53D582C118E7D98A001030A9 /* InfoPlist.strings */; };
@@ -61,6 +63,9 @@
 		5320C7F11962AE4100393E5D /* MouseEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MouseEvent.m; sourceTree = "<group>"; };
 		5320C7F31962B5D300393E5D /* ApplicationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationManager.h; sourceTree = "<group>"; };
 		5320C7F41962B5D300393E5D /* ApplicationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationManager.m; sourceTree = "<group>"; };
+		5360DDA219810156005B62DD /* WakeupManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WakeupManager.h; sourceTree = "<group>"; };
+		5360DDA319810156005B62DD /* WakeupManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WakeupManager.m; sourceTree = "<group>"; };
+		53748DAB196F823800B74301 /* statusbarmenu_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = statusbarmenu_icon.png; sourceTree = "<group>"; };
 		5380698418F920B700511FBA /* OverlayWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverlayWindow.xib; sourceTree = "<group>"; };
 		53D582B518E7D98A001030A9 /* whereismymouse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = whereismymouse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53D582B818E7D98A001030A9 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -136,6 +141,15 @@
 			name = EdgeCrossHelper;
 			sourceTree = "<group>";
 		};
+		5360DDA119810122005B62DD /* WakeupManager */ = {
+			isa = PBXGroup;
+			children = (
+				5360DDA219810156005B62DD /* WakeupManager.h */,
+				5360DDA319810156005B62DD /* WakeupManager.m */,
+			);
+			name = WakeupManager;
+			sourceTree = "<group>";
+		};
 		53D582AC18E7D98A001030A9 = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +193,7 @@
 		53D582BE18E7D98A001030A9 /* whereismymouse */ = {
 			isa = PBXGroup;
 			children = (
+				5360DDA119810122005B62DD /* WakeupManager */,
 				530855E81947482F0005484C /* whereismymouse.entitlements */,
 				531BEC41196AC37D003156CE /* EdgeCrossHelper */,
 				53D582FB18E93122001030A9 /* DisplayManager */,
@@ -201,6 +216,7 @@
 			children = (
 				531C7366190E3AB700681D5E /* my_arrow.png */,
 				53D582C018E7D98A001030A9 /* whereismymouse-Info.plist */,
+				53748DAB196F823800B74301 /* statusbarmenu_icon.png */,
 				53D582C118E7D98A001030A9 /* InfoPlist.strings */,
 				53D582C418E7D98A001030A9 /* main.m */,
 				53D582C618E7D98A001030A9 /* whereismymouse-Prefix.pch */,
@@ -360,6 +376,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53748DAC196F823800B74301 /* statusbarmenu_icon.png in Resources */,
 				53D582C318E7D98A001030A9 /* InfoPlist.strings in Resources */,
 				53D582D118E7D98A001030A9 /* Images.xcassets in Resources */,
 				53D582C918E7D98A001030A9 /* Credits.rtf in Resources */,
@@ -391,6 +408,7 @@
 				5317AA00196913CC001554E8 /* DisplayManager.m in Sources */,
 				5320C7F51962B5D300393E5D /* ApplicationManager.m in Sources */,
 				53D582F618E929D0001030A9 /* ShakeManager.m in Sources */,
+				5360DDA419810156005B62DD /* WakeupManager.m in Sources */,
 				53F6D82119430E8600E6B3BB /* GrandCircleView.m in Sources */,
 				5320C7F21962AE4100393E5D /* MouseEvent.m in Sources */,
 				53D5830018E931E7001030A9 /* ShakeDisplayManager.m in Sources */,

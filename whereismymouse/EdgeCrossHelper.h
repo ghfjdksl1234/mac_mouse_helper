@@ -11,4 +11,5 @@
 
 @interface EdgeCrossHelper : NSObject<MouseEventObserver>
 -(id)init;
+- (void)didChangeScreenParameters:(NSNotification *)notification;
 @end
