@@ -26,7 +26,7 @@
 }
 -(void)onTimer {
     self.displayManager = [[ShakeDisplayManager alloc] init];
-    [self.displayManager addObserver:self];
+    [self.displayManager setObserver:self];
     
     CGPoint point = [NSEvent mouseLocation];
     NSTimeInterval now = [[NSDate alloc] init].timeIntervalSince1970;

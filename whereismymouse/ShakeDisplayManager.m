@@ -21,7 +21,6 @@
 @property NSPoint center;
 @property CGFloat maxRadius;
 @property (strong, nonatomic)NSMutableArray* viewList;
-@property (strong, nonatomic)NSMutableArray* observerList;
 @property int status;
 @end
 
@@ -36,24 +35,16 @@
     self = [super init];
     if (self) {
         self.viewList = [[NSMutableArray alloc] init];
-        self.observerList = [[NSMutableArray alloc] init];
 
         self.status = STATUS_SLEEP;
     }
     return self;
 }
--(void)addObserver:(NSObject<DisplayEventObserver> *)observer {
-    [self.observerList addObject:observer];
-}
 -(void)fireEventStartDisplay {
-    for (NSObject<DisplayEventObserver> *observer in self.observerList) {
-        [observer onStartDisplay];
-    }
+    [self.observer onStartDisplay];
 }
 -(void)fireEventEndDisplay {
-    for (NSObject<DisplayEventObserver> *observer in self.observerList) {
-        [observer onEndDisplay];
-    }
+    [self.observer onEndDisplay];
 }
 
 -(void)onMoveWithEvent:(MouseEvent *)event {

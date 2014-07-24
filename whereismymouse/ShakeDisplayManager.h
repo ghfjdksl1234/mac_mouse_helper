@@ -15,5 +15,5 @@
 @end
 
 @interface ShakeDisplayManager : NSObject<MouseEventObserver>
-- (void)addObserver:(NSObject<DisplayEventObserver>*)observer;
+@property (weak, nonatomic)NSObject<DisplayEventObserver>* observer;
 @end

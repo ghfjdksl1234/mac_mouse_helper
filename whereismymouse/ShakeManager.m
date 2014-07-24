@@ -29,12 +29,12 @@
 }
 - (void)createMotionDetector {
     self.shakeDetector = [[ShakeDetector alloc] init];
-    [self.shakeDetector addObserver:self];
+    [self.shakeDetector setObserver:self];
     
 }
 - (void)createDisplayManager {
     self.displayManager = [[ShakeDisplayManager alloc] init];
-    [self.displayManager addObserver:self];
+    [self.displayManager setObserver:self];
 }
 
 - (void)onMoveWithEvent:(MouseEvent *)event {

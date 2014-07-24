@@ -14,5 +14,5 @@
 @end
 
 @interface ShakeDetector : NSObject<MouseEventObserver>
-- (void)addObserver:(NSObject<ShakeObserver>*)observer;
+@property (weak, nonatomic) NSObject<ShakeObserver>* observer;
 @end

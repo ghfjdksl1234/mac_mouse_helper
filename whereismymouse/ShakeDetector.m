@@ -42,7 +42,6 @@
 @end
 
 @interface ShakeDetector()
-@property (strong, nonatomic) NSMutableArray* observerList;
 @property (strong, nonatomic) NSMutableArray* eventList;
 @property (strong, nonatomic) MotionEventRegulator* eventRegulator;
 
@@ -56,7 +55,6 @@
 -(id)init {
     self = [super init];
     if (self) {
-        self.observerList = [[NSMutableArray alloc] init];
         self.eventList= [[NSMutableArray alloc] init];
         self.eventRegulator = [[MotionEventRegulator alloc] init];
         
@@ -64,13 +62,8 @@
     }
     return self;
 }
-- (void)addObserver:(NSObject<ShakeObserver> *)observer {
-    [self.observerList addObject:observer];
-}
 - (void)fireDetectionEvent {
-    for (NSObject<ShakeObserver>* observer in self.observerList) {
-        [observer onShakeDetected];
-    }
+    [self.observer onShakeDetected];
 }
 - (void)clearEvent {
     if (0 < self.eventList.count) {
