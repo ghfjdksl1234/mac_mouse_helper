@@ -10,6 +10,8 @@
 #import "MouseEvent.h"
 //#import "testinput.h"
 
+#define PREF_KEY_EDGE @"key_edge"
+
 @interface AppDelegate()
 @end
 
@@ -19,7 +21,16 @@
     [self.menuEnableShake setState:NSOnState];
     [self.menuEnableCross setState:NSOnState];
     [self setStartAtLogin:YES];
+    
     self.applicationManager = [[ApplicationManager alloc] init];
+    NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
+    NSDictionary *dict = preferences.dictionaryRepresentation;
+    NSNumber *number = [dict objectForKey:PREF_KEY_EDGE];
+    if (number != nil) {
+        if ([number boolValue] == NO) {
+            [self onEnableCross:NO];
+        }
+    }
     
 //    static int roundCount = 0;
     [NSEvent addGlobalMonitorForEventsMatchingMask:NSMouseMovedMask handler:^(NSEvent* event) {
@@ -40,6 +51,8 @@
         [self.mouseEventRouter onMoveWithTimestamp:input[0] posX:input[1] posY:input[2]];
     }
     /**/
+    
+    
 }
 - (void)applicationDidChangeScreenParameters:(NSNotification *)notification {
     if (self.applicationManager != nil) {
@@ -81,6 +94,10 @@
             break;
     }
     [self.applicationManager setEnableCross:enable];
+    
+    NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
+//    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:enable],  PREF_KEY_EDGE, nil];
+    [preferences setBool:enable forKey:PREF_KEY_EDGE];
 }
 
 + (BOOL) willStartAtLogin:(NSURL *)itemURL

@@ -10,7 +10,10 @@
 #import "ApplicationManager.h"
 
 #define PRECISION 1
-#define MOVE_BUFFER_POINT 25
+#define MOVE_POSITION_BUFFER 25
+
+#define MOVE_DECISION_DELAY_TIME 0.27
+#define MOVE_STOP_DECISION_TIME 0.4
 
 @interface FPRangeStartEnd : NSObject
 @property CGFloat start, end;
@@ -36,8 +39,9 @@
 @end
 
 @interface EdgeCrossHelper()
-@property CGFloat lastX, lastY;
-@property int countX, countY;
+@property BOOL isTrying;
+@property NSTimeInterval tryStartTime;
+@property NSTimeInterval lastMoveTime;
 
 @property (strong, nonatomic) NSMutableDictionary* verticalByX;
 @property (strong, nonatomic) NSMutableDictionary* horizontalByY;
@@ -45,8 +49,7 @@
 
 @implementation EdgeCrossHelper
 -(id)init {
-    self.lastX = self.lastY = CGFLOAT_MAX;
-    self.countX = self.countY = 0;
+    self.isTrying = NO;
     
     self.verticalByX = [[NSMutableDictionary alloc] init];
     self.horizontalByY = [[NSMutableDictionary alloc] init];
@@ -100,9 +103,9 @@
                      pos2:(CGFloat)pos2 size2:(CGFloat)size2
                    range2:(FPRangeStartEnd*)range2
                dictionary:(NSMutableDictionary*) dic {
-    if (pos1 == pos2 && size1 == size2) {
-        return;
-    }
+//    if (pos1 == pos2 && size1 == size2) { // this makes a bug
+//        return;
+//    }
     if (pos1 + size1 == pos2 &&
         range1.start <= range2.end &&
         range2.start <= range1.end) {
@@ -123,12 +126,25 @@
     CGFloat x = [event getX];
     CGFloat y = [event getY];
     
+    NSTimeInterval now = [[NSDate alloc] init].timeIntervalSince1970;
+    if (MOVE_STOP_DECISION_TIME < (now - self.lastMoveTime)) {
+        self.isTrying = NO;
+    }
+    self.lastMoveTime = now;
+    
     CGFloat newPos = [EdgeCrossHelper getNewPosFor:x pos:y dic:self.verticalByX];
     if (newPos != CGFLOAT_MAX) {
+        if (self.isTrying == NO) {
+            self.isTrying = YES;
+            self.tryStartTime = now;
+            return;
+        } else if ((now - self.tryStartTime) < MOVE_DECISION_DELAY_TIME) {
+            return;
+        }
         if (newPos < y) {
-            newPos -= MOVE_BUFFER_POINT;
+            newPos -= MOVE_POSITION_BUFFER;
         } else {
-            newPos += MOVE_BUFFER_POINT;
+            newPos += MOVE_POSITION_BUFFER;
         }
         if (floor(x) != x) {
             x += 5;
@@ -143,9 +159,9 @@
         newPos = [EdgeCrossHelper getNewPosFor:y pos:x dic:self.horizontalByY];
         if (newPos != CGFLOAT_MAX) {
             if (newPos < x) {
-                newPos -= MOVE_BUFFER_POINT;
+                newPos -= MOVE_POSITION_BUFFER;
             } else {
-                newPos += MOVE_BUFFER_POINT;
+                newPos += MOVE_POSITION_BUFFER;
             }
             if (floor(y) != y) {
                 y += 5;
@@ -156,6 +172,8 @@
             y = [NSScreen mainScreen].frame.size.height - y;
             [ApplicationManager moveMouseToGlobalPos:CGPointMake(newPos, y)];
 //            CGWarpMouseCursorPosition(CGPointMake(newPos, y));
+        } else {
+            self.isTrying = NO;
         }
     }
 }
@@ -163,7 +181,7 @@
     CGFloat newPos = CGFLOAT_MAX;
     NSNumber* searchKey = nil;
     for (NSNumber* key in [dic allKeys]) {
-        if ((fabs)(key.floatValue-keyValue)<PRECISION) {
+        if (fabs(key.floatValue-keyValue)<PRECISION) {
             searchKey = key;
             break;
         }
