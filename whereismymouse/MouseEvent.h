@@ -13,5 +13,6 @@
 - (NSTimeInterval) getTimestamp;
 - (CGFloat) getX;
 - (CGFloat) getY;
+- (CGPoint) getPoint;
 
 @end

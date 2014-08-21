@@ -59,12 +59,12 @@
             self.status = STATUS_DISPLAY;
         case STATUS_DISPLAY:
             self.center = NSMakePoint(x, y);
-            [self update];
+            NSTimeInterval now = [[NSDate alloc] init].timeIntervalSince1970;
+            [self updateWithNow:now];
             break;
     }
 }
--(void)update {
-    NSTimeInterval now = [[NSDate alloc] init].timeIntervalSince1970;
+-(void)updateWithNow:(NSTimeInterval)now {
     CGFloat radius = self.maxRadius * (TIME_DISPLAY_IN_SEC - (now - self.startInterval)) / TIME_DISPLAY_IN_SEC;
 
     for(LocalItem* item in self.viewList) {
@@ -109,8 +109,8 @@
         [self fireEventEndDisplay];
         self.status = STATUS_SLEEP;
     } else {
-        [self update];
-        [NSTimer scheduledTimerWithTimeInterval:0.00001 target:self selector:@selector(onTimer) userInfo:nil repeats:NO];
+        [self updateWithNow:now];
+        [self setTimer];
     }
 }
 - (void)destroyViews {

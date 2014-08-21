@@ -29,4 +29,7 @@
 - (CGFloat) getY {
     return self.y;
 }
+- (CGPoint) getPoint {
+    return CGPointMake(self.x, self.y);
+}
 @end

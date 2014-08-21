@@ -39,19 +39,21 @@
     }
 }
 -(NSView*)getParentViewForDisplay:(int)screenNo {
-    NSScreen* screen = [[NSScreen screens] objectAtIndex:screenNo];
-    
-    NSRect frame = screen.frame;
-    
-    NSRect rect = NSMakeRect(frame.origin.x, frame.origin.y, frame.size.width,  frame.size.height);
-    
-    NSWindowController *windowController = [[NSWindowController alloc] initWithWindowNibName:@"OverlayWindow"];
-    OverlayWindow *window = (OverlayWindow*)windowController.window;
-    [window setFrame:rect display:YES];
-    [window makeKeyAndOrderFront: nil];
-    
-    [self.windowControllerDic setObject:windowController forKey:[NSNumber numberWithInt:screenNo]];
-    
-    return window.contentView;
+    NSWindowController* windowController = [self.windowControllerDic objectForKey:[NSNumber numberWithInt:screenNo]];
+    if (windowController == nil) {
+        NSScreen* screen = [[NSScreen screens] objectAtIndex:screenNo];
+        
+        NSRect frame = screen.frame;
+        
+        NSRect rect = NSMakeRect(frame.origin.x, frame.origin.y, frame.size.width,  frame.size.height);
+        
+        windowController = [[NSWindowController alloc] initWithWindowNibName:@"OverlayWindow"];
+        OverlayWindow *window = (OverlayWindow*)windowController.window;
+        [window setFrame:rect display:YES];
+        [window makeKeyAndOrderFront: nil];
+        
+        [self.windowControllerDic setObject:windowController forKey:[NSNumber numberWithInt:screenNo]];
+    }
+    return windowController.window.contentView;
 }
 @end

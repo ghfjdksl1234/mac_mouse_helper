@@ -13,5 +13,4 @@
 #import "ShakeDisplayManager.h"
 
 @interface ShakeManager : NSObject<MouseEventObserver, ShakeObserver, DisplayEventObserver>
-- (id)init;
 @end

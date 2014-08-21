@@ -7,6 +7,7 @@
 //
 
 #import "EdgeCrossHelper.h"
+#import "FPRangeStartEnd.h"
 #import "ApplicationManager.h"
 
 #define PRECISION 1
@@ -14,29 +15,6 @@
 
 #define MOVE_DECISION_DELAY_TIME 0.27
 #define MOVE_STOP_DECISION_TIME 0.4
-
-@interface FPRangeStartEnd : NSObject
-@property CGFloat start, end;
-+(FPRangeStartEnd*) rangeWithStart:(CGFloat)start end:(CGFloat)end;
--(BOOL)contains:(CGFloat)value;
-@end
-
-
-@implementation FPRangeStartEnd
-+(FPRangeStartEnd*) rangeWithStart:(CGFloat)start end:(CGFloat)end {
-    FPRangeStartEnd* range = [FPRangeStartEnd alloc];
-    range.start = start;
-    range.end = end;
-    return range;
-}
--(BOOL)contains:(CGFloat)value {
-    BOOL contains = NO;
-    if (self.start <= value && value <= self.end) {
-        contains = YES;
-    }
-    return contains;
-}
-@end
 
 @interface EdgeCrossHelper()
 @property BOOL isTrying;
