@@ -15,12 +15,19 @@
 		53201A5719A4970E009283F8 /* FPRangeStartEnd.m in Sources */ = {isa = PBXBuildFile; fileRef = 53201A5619A4970E009283F8 /* FPRangeStartEnd.m */; };
 		53201A5B19A4978B009283F8 /* EdgeGuideHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 53201A5A19A4978B009283F8 /* EdgeGuideHelper.m */; };
 		53201A5E19A4CD0C009283F8 /* ScreenEdgeList.m in Sources */ = {isa = PBXBuildFile; fileRef = 53201A5D19A4CD0C009283F8 /* ScreenEdgeList.m */; };
+		53201A6019A5BC55009283F8 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53201A5F19A5BC55009283F8 /* Carbon.framework */; };
+		53201A6819A5BCD0009283F8 /* DDHotKeyCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 53201A6319A5BCD0009283F8 /* DDHotKeyCenter.m */; };
+		53201A6919A5BCD0009283F8 /* DDHotKeyTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 53201A6519A5BCD0009283F8 /* DDHotKeyTextField.m */; };
+		53201A6A19A5BCD0009283F8 /* DDHotKeyUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 53201A6719A5BCD0009283F8 /* DDHotKeyUtilities.m */; };
+		53201A6E19A5BCF4009283F8 /* HotKeyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 53201A6D19A5BCF4009283F8 /* HotKeyManager.m */; };
 		5320C7EF1962ADFC00393E5D /* MouseEventDistributor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5320C7EE1962ADFC00393E5D /* MouseEventDistributor.m */; };
 		5320C7F21962AE4100393E5D /* MouseEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 5320C7F11962AE4100393E5D /* MouseEvent.m */; };
 		5320C7F51962B5D300393E5D /* ApplicationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5320C7F41962B5D300393E5D /* ApplicationManager.m */; };
 		5360DDA419810156005B62DD /* WakeupManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5360DDA319810156005B62DD /* WakeupManager.m */; };
 		53748DAC196F823800B74301 /* statusbarmenu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 53748DAB196F823800B74301 /* statusbarmenu_icon.png */; };
 		5380698518F920B700511FBA /* OverlayWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5380698418F920B700511FBA /* OverlayWindow.xib */; };
+		538ED23119A5C5D600386695 /* ScreenNoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 538ED23019A5C5D600386695 /* ScreenNoView.m */; };
+		538ED23419A5D3BB00386695 /* ViewScreenNoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 538ED23319A5D3BB00386695 /* ViewScreenNoItem.m */; };
 		53D582B918E7D98A001030A9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D582B818E7D98A001030A9 /* Cocoa.framework */; };
 		53D582C318E7D98A001030A9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 53D582C118E7D98A001030A9 /* InfoPlist.strings */; };
 		53D582C518E7D98A001030A9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D582C418E7D98A001030A9 /* main.m */; };
@@ -66,6 +73,15 @@
 		53201A5A19A4978B009283F8 /* EdgeGuideHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EdgeGuideHelper.m; sourceTree = "<group>"; };
 		53201A5C19A4CD0C009283F8 /* ScreenEdgeList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenEdgeList.h; sourceTree = "<group>"; };
 		53201A5D19A4CD0C009283F8 /* ScreenEdgeList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenEdgeList.m; sourceTree = "<group>"; };
+		53201A5F19A5BC55009283F8 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		53201A6219A5BCD0009283F8 /* DDHotKeyCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDHotKeyCenter.h; path = "../../../../../Downloads/DDHotKey-master/DDHotKeyCenter.h"; sourceTree = "<group>"; };
+		53201A6319A5BCD0009283F8 /* DDHotKeyCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDHotKeyCenter.m; path = "../../../../../Downloads/DDHotKey-master/DDHotKeyCenter.m"; sourceTree = "<group>"; };
+		53201A6419A5BCD0009283F8 /* DDHotKeyTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDHotKeyTextField.h; path = "../../../../../Downloads/DDHotKey-master/DDHotKeyTextField.h"; sourceTree = "<group>"; };
+		53201A6519A5BCD0009283F8 /* DDHotKeyTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDHotKeyTextField.m; path = "../../../../../Downloads/DDHotKey-master/DDHotKeyTextField.m"; sourceTree = "<group>"; };
+		53201A6619A5BCD0009283F8 /* DDHotKeyUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDHotKeyUtilities.h; path = "../../../../../Downloads/DDHotKey-master/DDHotKeyUtilities.h"; sourceTree = "<group>"; };
+		53201A6719A5BCD0009283F8 /* DDHotKeyUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDHotKeyUtilities.m; path = "../../../../../Downloads/DDHotKey-master/DDHotKeyUtilities.m"; sourceTree = "<group>"; };
+		53201A6C19A5BCF4009283F8 /* HotKeyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotKeyManager.h; sourceTree = "<group>"; };
+		53201A6D19A5BCF4009283F8 /* HotKeyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotKeyManager.m; sourceTree = "<group>"; };
 		5320C7ED1962ADFC00393E5D /* MouseEventDistributor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseEventDistributor.h; sourceTree = "<group>"; };
 		5320C7EE1962ADFC00393E5D /* MouseEventDistributor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MouseEventDistributor.m; sourceTree = "<group>"; };
 		5320C7F01962AE4100393E5D /* MouseEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseEvent.h; sourceTree = "<group>"; };
@@ -76,6 +92,10 @@
 		5360DDA319810156005B62DD /* WakeupManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WakeupManager.m; sourceTree = "<group>"; };
 		53748DAB196F823800B74301 /* statusbarmenu_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = statusbarmenu_icon.png; sourceTree = "<group>"; };
 		5380698418F920B700511FBA /* OverlayWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverlayWindow.xib; sourceTree = "<group>"; };
+		538ED22F19A5C5D600386695 /* ScreenNoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenNoView.h; sourceTree = "<group>"; };
+		538ED23019A5C5D600386695 /* ScreenNoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenNoView.m; sourceTree = "<group>"; };
+		538ED23219A5D3BB00386695 /* ViewScreenNoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewScreenNoItem.h; sourceTree = "<group>"; };
+		538ED23319A5D3BB00386695 /* ViewScreenNoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewScreenNoItem.m; sourceTree = "<group>"; };
 		53D582B518E7D98A001030A9 /* whereismymouse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = whereismymouse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53D582B818E7D98A001030A9 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		53D582BB18E7D98A001030A9 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -113,6 +133,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53201A6019A5BC55009283F8 /* Carbon.framework in Frameworks */,
 				53D582B918E7D98A001030A9 /* Cocoa.framework in Frameworks */,
 				530855EA194748450005484C /* StoreKit.framework in Frameworks */,
 			);
@@ -161,6 +182,30 @@
 			name = HOLD_EdgeGuide;
 			sourceTree = "<group>";
 		};
+		53201A6119A5BC6B009283F8 /* HotkeyJump */ = {
+			isa = PBXGroup;
+			children = (
+				538ED22E19A5C5C000386695 /* Display */,
+				53201A6B19A5BCD4009283F8 /* DDHotKey */,
+				53201A6C19A5BCF4009283F8 /* HotKeyManager.h */,
+				53201A6D19A5BCF4009283F8 /* HotKeyManager.m */,
+			);
+			name = HotkeyJump;
+			sourceTree = "<group>";
+		};
+		53201A6B19A5BCD4009283F8 /* DDHotKey */ = {
+			isa = PBXGroup;
+			children = (
+				53201A6219A5BCD0009283F8 /* DDHotKeyCenter.h */,
+				53201A6319A5BCD0009283F8 /* DDHotKeyCenter.m */,
+				53201A6419A5BCD0009283F8 /* DDHotKeyTextField.h */,
+				53201A6519A5BCD0009283F8 /* DDHotKeyTextField.m */,
+				53201A6619A5BCD0009283F8 /* DDHotKeyUtilities.h */,
+				53201A6719A5BCD0009283F8 /* DDHotKeyUtilities.m */,
+			);
+			name = DDHotKey;
+			sourceTree = "<group>";
+		};
 		5360DDA119810122005B62DD /* HOLD_WakeupManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,6 +213,15 @@
 				5360DDA319810156005B62DD /* WakeupManager.m */,
 			);
 			name = HOLD_WakeupManager;
+			sourceTree = "<group>";
+		};
+		538ED22E19A5C5C000386695 /* Display */ = {
+			isa = PBXGroup;
+			children = (
+				538ED22F19A5C5D600386695 /* ScreenNoView.h */,
+				538ED23019A5C5D600386695 /* ScreenNoView.m */,
+			);
+			name = Display;
 			sourceTree = "<group>";
 		};
 		53D582AC18E7D98A001030A9 = {
@@ -193,6 +247,7 @@
 		53D582B718E7D98A001030A9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				53201A5F19A5BC55009283F8 /* Carbon.framework */,
 				530855E9194748450005484C /* StoreKit.framework */,
 				53D582B818E7D98A001030A9 /* Cocoa.framework */,
 				53D582D718E7D98A001030A9 /* XCTest.framework */,
@@ -214,6 +269,7 @@
 		53D582BE18E7D98A001030A9 /* whereismymouse */ = {
 			isa = PBXGroup;
 			children = (
+				53201A6119A5BC6B009283F8 /* HotkeyJump */,
 				5360DDA119810122005B62DD /* HOLD_WakeupManager */,
 				53201A5819A49776009283F8 /* HOLD_EdgeGuide */,
 				531BEC41196AC37D003156CE /* EdgeCrossHelper */,
@@ -230,6 +286,8 @@
 				531C7363190E1DDA00681D5E /* testinput.h */,
 				53201A5519A4970E009283F8 /* FPRangeStartEnd.h */,
 				53201A5619A4970E009283F8 /* FPRangeStartEnd.m */,
+				538ED23219A5D3BB00386695 /* ViewScreenNoItem.h */,
+				538ED23319A5D3BB00386695 /* ViewScreenNoItem.m */,
 			);
 			path = whereismymouse;
 			sourceTree = "<group>";
@@ -425,7 +483,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				53201A5E19A4CD0C009283F8 /* ScreenEdgeList.m in Sources */,
+				538ED23419A5D3BB00386695 /* ViewScreenNoItem.m in Sources */,
 				53D582CC18E7D98A001030A9 /* AppDelegate.m in Sources */,
+				53201A6A19A5BCD0009283F8 /* DDHotKeyUtilities.m in Sources */,
 				53201A5719A4970E009283F8 /* FPRangeStartEnd.m in Sources */,
 				53D582C518E7D98A001030A9 /* main.m in Sources */,
 				531C7362190DF47F00681D5E /* MotionEventRegulator.m in Sources */,
@@ -434,12 +494,16 @@
 				5320C7F51962B5D300393E5D /* ApplicationManager.m in Sources */,
 				53D582F618E929D0001030A9 /* ShakeManager.m in Sources */,
 				5360DDA419810156005B62DD /* WakeupManager.m in Sources */,
+				53201A6919A5BCD0009283F8 /* DDHotKeyTextField.m in Sources */,
 				53F6D82119430E8600E6B3BB /* GrandCircleView.m in Sources */,
+				538ED23119A5C5D600386695 /* ScreenNoView.m in Sources */,
 				5320C7F21962AE4100393E5D /* MouseEvent.m in Sources */,
 				53D5830018E931E7001030A9 /* ShakeDisplayManager.m in Sources */,
 				5320C7EF1962ADFC00393E5D /* MouseEventDistributor.m in Sources */,
 				531BEC44196AC3DC003156CE /* EdgeCrossHelper.m in Sources */,
 				53D5830318E9382C001030A9 /* ShakeDetector.m in Sources */,
+				53201A6819A5BCD0009283F8 /* DDHotKeyCenter.m in Sources */,
+				53201A6E19A5BCF4009283F8 /* HotKeyManager.m in Sources */,
 				53201A5B19A4978B009283F8 /* EdgeGuideHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

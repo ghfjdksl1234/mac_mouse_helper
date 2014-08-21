@@ -10,6 +10,7 @@
 #import "OverlayWindow.h"
 #import "GrandCircleView.h"
 #import "DisplayManager.h"
+#import "ViewScreenNoItem.h"
 
 #define STATUS_SLEEP 0
 #define STATUS_DISPLAY 1
@@ -24,18 +25,11 @@
 @property int status;
 @end
 
-@interface LocalItem : NSObject
-@property (strong, nonatomic)GrandCircleView* view;
-@property int screenNo;
-- (id)initWithView:(NSView*)view screenNo:(int)screenNo;
-@end
-
 @implementation ShakeDisplayManager
 -(id)init {
     self = [super init];
     if (self) {
         self.viewList = [[NSMutableArray alloc] init];
-
         self.status = STATUS_SLEEP;
     }
     return self;
@@ -67,13 +61,14 @@
 -(void)updateWithNow:(NSTimeInterval)now {
     CGFloat radius = self.maxRadius * (TIME_DISPLAY_IN_SEC - (now - self.startInterval)) / TIME_DISPLAY_IN_SEC;
 
-    for(LocalItem* item in self.viewList) {
-        [item.view updateWithCenter:self.center radius:radius];
+    for(ViewScreenNoItem* item in self.viewList) {
+        GrandCircleView* view = (GrandCircleView*)item.view;
+        [view updateWithCenter:self.center radius:radius];
     }
 }
 - (void)createViewsWithCenter:(NSPoint) center {
     NSPoint origin, end;
-    int index = 0;
+    int screenNo = 0;
     for(NSScreen* screen in [NSScreen screens]) {
 //        NSRect frame = screen.visibleFrame;
         NSRect frame = screen.frame;
@@ -94,9 +89,9 @@
         
         NSRect rect = NSMakeRect(0, 0, frame.size.width,  frame.size.height);
         GrandCircleView* view = [[GrandCircleView alloc] initWithFrame:rect orgX:frame.origin.x orgY:frame.origin.y];
-        [[DisplayManager getInstance] addView:view screenNo:index];
-        [self.viewList addObject:[[LocalItem alloc] initWithView:view screenNo:index]];
-        index++;
+        [[DisplayManager getInstance] addView:view screenNo:screenNo];
+        [self.viewList addObject:[[ViewScreenNoItem alloc] initWithView:view screenNo:screenNo]];
+        screenNo++;
     }
     CGFloat xDist = MAX(ABS(center.x - origin.x), ABS(center.x - end.x));
     CGFloat yDist = MAX(ABS(center.y - origin.y), ABS(center.y - end.y));
@@ -114,7 +109,7 @@
     }
 }
 - (void)destroyViews {
-    for (LocalItem* item in self.viewList) {
+    for (ViewScreenNoItem* item in self.viewList) {
         [[DisplayManager getInstance] removeView:item.view screenNo:item.screenNo];
     }
     [self.viewList removeAllObjects];
@@ -122,13 +117,4 @@
 - (void)setTimer {
     [NSTimer scheduledTimerWithTimeInterval:0.00001 target:self selector:@selector(onTimer) userInfo:nil repeats:NO];
 }
-@end
-
-@implementation LocalItem
--(id)initWithView:(GrandCircleView *)view screenNo:(int)screenNo {
-    self.view = view;
-    self.screenNo = screenNo;
-    return self;
-}
-
 @end

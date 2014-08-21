@@ -11,6 +11,7 @@
 
 @interface DisplayManager()
 @property (strong, nonatomic)NSMutableDictionary* windowControllerDic;
+@property (weak, nonatomic)NSObject<DisplayKeyEventListener>* listener;
 @end
 
 @implementation DisplayManager
@@ -25,6 +26,7 @@
 }
 -(id)init {
     self.windowControllerDic = [[NSMutableDictionary alloc] init];
+    self.listener = nil;
     return self;
 }
 -(void)addView:(NSView*)view screenNo:(int)screenNo {
@@ -53,7 +55,28 @@
         [window makeKeyAndOrderFront: nil];
         
         [self.windowControllerDic setObject:windowController forKey:[NSNumber numberWithInt:screenNo]];
+        if (self.listener != nil) {
+            [[NSRunningApplication currentApplication] activateWithOptions:NSApplicationActivateIgnoringOtherApps];
+        }
     }
     return windowController.window.contentView;
+}
+
+-(void)setKeyEventListener:(NSObject<DisplayKeyEventListener>*)listener {
+    if (listener != nil) {
+        if (self.listener == nil) {
+            [NSEvent addLocalMonitorForEventsMatchingMask:NSKeyDownMask handler:^NSEvent *(NSEvent *event) {
+                if (self.listener != nil) {
+                    [self.listener onKey:event.keyCode];
+                }
+                return event;
+            }];
+        }
+        self.listener = listener;
+        [[NSRunningApplication currentApplication] activateWithOptions:NSApplicationActivateIgnoringOtherApps];
+    } else {
+        self.listener = nil;
+//        disable listening
+    }
 }
 @end

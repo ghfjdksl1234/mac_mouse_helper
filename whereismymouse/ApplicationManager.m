@@ -10,12 +10,14 @@
 #import "MouseEventDistributor.h"
 #import "ShakeManager.h"
 #import "EdgeCrossHelper.h"
-#import "WakeupManager.h"
+#import "HotKeyManager.h"
+//#import "WakeupManager.h"
 
 @interface ApplicationManager()
 @property (strong, nonatomic) MouseEventDistributor* eventDistributor;
 @property (strong, nonatomic) ShakeManager* shakeManager;
 @property (strong, nonatomic) EdgeCrossHelper* crossHelper;
+@property (strong, nonatomic) HotKeyManager* hotkeyManager;
 //@property (strong, nonatomic) WakeupManager* wakeupManager;
 @end
 
@@ -24,19 +26,25 @@
     self.eventDistributor = [[MouseEventDistributor alloc] init];
     [self setEnableShake:YES];
     [self setEnableCross:YES];
+    [self setEnableHotKey:YES];
     // Can't use below because of delay after wakeup
 //    [self setEnableCenterAtWakeup:YES];
     
     //    static int roundCount = 0;
-    [NSEvent addGlobalMonitorForEventsMatchingMask:NSMouseMovedMask handler:^(NSEvent* event) {
+    [NSEvent addGlobalMonitorForEventsMatchingMask:(NSMouseMovedMask | NSKeyDownMask) handler:^(NSEvent* event) {
         //the code commented below is for energy effiency. but I think it's not a matter. So I commented it.
         //        roundCount = (roundCount+1)%3;
         //        if (0 < roundCount) {
         //            return;
         //        }
-        NSPoint position = [NSEvent mouseLocation];
-        MouseEvent* mouseEvent = [[MouseEvent alloc] initWithTimestamp:event.timestamp posX:position.x posY:position.y];
-        [self onMoveWithEvent:mouseEvent];
+        if (event.type == NSMouseMoved) {
+            NSPoint position = [NSEvent mouseLocation];
+            MouseEvent* mouseEvent = [[MouseEvent alloc] initWithTimestamp:event.timestamp posX:position.x posY:position.y];
+            [self onMoveWithEvent:mouseEvent];
+        } else if (event.type == NSKeyDown) {
+            int k = 3;
+            k = 5;
+        }
         
         //        printf("(%10.4f) : x(%f), y(%f)\n", event.timestamp, position.x, position.y);
     }];
@@ -69,6 +77,15 @@
     } else if (enable == NO && self.crossHelper != nil) {
         [self.eventDistributor removeObserver:self.crossHelper];
         self.crossHelper = nil;
+    }
+}
+- (void) setEnableHotKey:(BOOL)enable {
+    if (enable == YES && self.hotkeyManager == nil) {
+        self.hotkeyManager = [[HotKeyManager alloc] init];
+        [self.hotkeyManager setEnable:YES];
+    } else if (enable == NO && self.hotkeyManager != nil) {
+        [self.hotkeyManager setEnable:NO];
+        self.hotkeyManager = nil;
     }
 }
 //- (void) setEnableCenterAtWakeup:(BOOL)enable {

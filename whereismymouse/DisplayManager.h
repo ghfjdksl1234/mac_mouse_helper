@@ -8,8 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol DisplayKeyEventListener <NSObject>
+-(void)onKey:(unsigned short) keycode;
+@end
+
 @interface DisplayManager : NSObject
 +(DisplayManager*)getInstance;
 -(void)addView:(NSView*)view screenNo:(int)screenNo;
 -(void)removeView:(NSView*)view screenNo:(int)screenNo;
+
+-(void)setKeyEventListener:(NSObject<DisplayKeyEventListener>*)listener;
+
 @end
