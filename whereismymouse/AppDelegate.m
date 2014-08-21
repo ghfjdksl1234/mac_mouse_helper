@@ -31,28 +31,6 @@
             [self onEnableCross:NO];
         }
     }
-    
-//    static int roundCount = 0;
-    [NSEvent addGlobalMonitorForEventsMatchingMask:NSMouseMovedMask handler:^(NSEvent* event) {
-        //the code commented below is for energy effiency. but I think it's not a matter. So I commented it.
-//        roundCount = (roundCount+1)%3;
-//        if (0 < roundCount) {
-//            return;
-//        }
-        NSPoint position = [NSEvent mouseLocation];
-        MouseEvent* mouseEvent = [[MouseEvent alloc] initWithTimestamp:event.timestamp posX:position.x posY:position.y];
-        [self.applicationManager onMoveWithEvent:mouseEvent];
-        
-//        printf("(%10.4f) : x(%f), y(%f)\n", event.timestamp, position.x, position.y);
-    }];
-    /*/
-    for (int i = 0 ; i < sizeof(testInput) / sizeof(testInput[0]) ; i++) {
-        double* input = testInput[i];
-        [self.mouseEventRouter onMoveWithTimestamp:input[0] posX:input[1] posY:input[2]];
-    }
-    /**/
-    
-    
 }
 - (void)applicationDidChangeScreenParameters:(NSNotification *)notification {
     if (self.applicationManager != nil) {
