@@ -41,12 +41,12 @@
             NSPoint position = [NSEvent mouseLocation];
             MouseEvent* mouseEvent = [[MouseEvent alloc] initWithTimestamp:event.timestamp posX:position.x posY:position.y];
             [self onMoveWithEvent:mouseEvent];
+            printf("(%10.4f) : x(%f), y(%f)\n", event.timestamp, position.x, position.y);
         } else if (event.type == NSKeyDown) {
             int k = 3;
             k = 5;
         }
         
-        //        printf("(%10.4f) : x(%f), y(%f)\n", event.timestamp, position.x, position.y);
     }];
     /*/
      for (int i = 0 ; i < sizeof(testInput) / sizeof(testInput[0]) ; i++) {
@@ -83,6 +83,7 @@
     if (enable == YES && self.hotkeyManager == nil) {
         self.hotkeyManager = [[HotKeyManager alloc] init];
         [self.hotkeyManager setEnable:YES];
+        [self.eventDistributor addObserver:self.hotkeyManager];
     } else if (enable == NO && self.hotkeyManager != nil) {
         [self.hotkeyManager setEnable:NO];
         self.hotkeyManager = nil;

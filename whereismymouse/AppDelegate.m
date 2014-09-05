@@ -44,6 +44,8 @@
     self.statusBar.menu = self.statusMenu;
     self.statusBar.highlightMode = YES;
 }
+- (IBAction)onHelp:(id)sender {[[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://inbedsoft.blogspot.kr/2014/09/where-is-my-mouse.html"]];
+}
 - (IBAction)onEnableShake:(id)sender {
     BOOL enable = YES;
     switch (self.menuEnableShake.state) {

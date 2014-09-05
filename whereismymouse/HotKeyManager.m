@@ -13,15 +13,20 @@
 #import "DisplayManager.h"
 #import "ViewScreenNoItem.h"
 #import "ApplicationManager.h"
+#import "CursorShowView.h"
 
 #define DISPLAY_TIME 3
+#define DISPLAY_CURSOR_TIME 0.7
+#define RADIUS 120
 
 @interface HotKeyManager()
 
 @property BOOL isDisplaying;
 @property (strong, nonatomic)NSMutableArray* viewList;
 @property (strong,nonatomic)NSArray *sortedArray;
-@property (weak,nonatomic)NSTimer *timer;
+@property (weak,nonatomic)NSTimer *numberShowTimer;
+@property NSTimeInterval startCircleInterval;
+@property CGPoint center;
 @end
 
 @implementation HotKeyManager
@@ -99,22 +104,25 @@
         index++;
         [self.viewList addObject:[[ViewScreenNoItem alloc] initWithView:view screenNo:screenNo]];
     }
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:DISPLAY_TIME target:self selector:@selector(onTimer) userInfo:nil repeats:NO];
+    self.numberShowTimer = [NSTimer scheduledTimerWithTimeInterval:DISPLAY_TIME target:self selector:@selector(onTimer) userInfo:nil repeats:NO];
     [[DisplayManager getInstance] setKeyEventListener:self];
     
 }
 - (void)onTimer {
-//    [[DisplayManager getInstance] setKeyEventListener:nil];
-    [self destroyViews];
-//    [[DisplayManager getInstance] setKeyEnable:NO];
+    [self destroyNumberViews];
 }
-- (void)destroyViews {
+- (void)destroyNumberViews {
+    [[DisplayManager getInstance] setKeyEventListener:self];
+    NSMutableArray* tempArray = [[NSMutableArray alloc]init];
     for (ViewScreenNoItem* item in self.viewList) {
-        [[DisplayManager getInstance] removeView:item.view screenNo:item.screenNo];
+        if ([item.view isKindOfClass:ScreenNoView.class]) {
+            [tempArray addObject:item];
+            [[DisplayManager getInstance] removeView:item.view screenNo:item.screenNo];
+        }
     }
-    [self.viewList removeAllObjects];
-    [self.timer invalidate];
-    self.timer = nil;
+    [self.viewList removeObjectsInArray:tempArray];
+    [self.numberShowTimer invalidate];
+    self.numberShowTimer = nil;
     self.sortedArray = nil;
     self.isDisplaying = NO;
 }
@@ -127,8 +135,50 @@
             CGSize size = frame.size;
             CGPoint point = CGPointMake(origin.x + size.width/2, origin.y + size.height/2);
             [ApplicationManager moveMouseToGlobalPos:point];
-            [self destroyViews];
+            NSScreen* screen = [self.sortedArray objectAtIndex:index];
+            [self destroyNumberViews];
+//            [self showLocaionViewWithCenter:CGPointMake(150, 150) screen:[NSScreen screens][0]];
+            [self showLocaionViewWithCenter:point screen:screen];
         }
     }
+}
+-(void)showLocaionViewWithCenter:(CGPoint)centerInGlobal screen:(NSScreen*)screen {
+    int screenNo = [[NSScreen screens] indexOfObject:screen];
+    NSRect frame = screen.frame;
+    NSRect rect = frame;
+    rect.origin.x = rect.origin.y = 0;
+    CursorShowView* view = [[CursorShowView alloc] initWithFrame:rect orgX:frame.origin.x orgY:frame.origin.y];
+    [[DisplayManager getInstance] addView:view screenNo:screenNo];
+    self.center = CGPointMake(centerInGlobal.x, centerInGlobal.y);
+    [view updateWithCenter:self.center radius:RADIUS];
+    [self.viewList addObject:[[ViewScreenNoItem alloc] initWithView:view screenNo:screenNo]];
+    self.startCircleInterval = [[NSDate alloc] init].timeIntervalSince1970;
+    [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(destroyLocationView) userInfo:nil repeats:NO];
+}
+-(void)destroyLocationView {
+    
+    NSTimeInterval now = [[NSDate alloc] init].timeIntervalSince1970;
+    if (DISPLAY_CURSOR_TIME <= now - self.startCircleInterval) {
+        NSMutableArray* tempArray = [[NSMutableArray alloc]init];
+        for (ViewScreenNoItem* item in self.viewList) {
+            if ([item.view isKindOfClass:CursorShowView.class]) {
+                [tempArray addObject:item];
+                [[DisplayManager getInstance] removeView:item.view screenNo:item.screenNo];
+            }
+        }
+        [self.viewList removeObjectsInArray:tempArray];
+    } else {
+        for (ViewScreenNoItem* item in self.viewList) {
+            if ([item.view isKindOfClass:CursorShowView.class]) {
+                int radius = RADIUS * (DISPLAY_CURSOR_TIME - (now - self.startCircleInterval)) / DISPLAY_CURSOR_TIME;
+                [(CursorShowView*)item.view updateWithCenter:self.center radius:radius];
+            }
+        }
+        [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(destroyLocationView) userInfo:nil repeats:NO];
+    }
+    
+}
+- (void) onMoveWithEvent:(MouseEvent*) event {
+    self.center = [event getPoint];
 }
 @end

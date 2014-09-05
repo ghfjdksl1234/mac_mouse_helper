@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "DisplayManager.h"
+#import "MouseEventObserver.h"
 
-@interface HotKeyManager : NSObject<DisplayKeyEventListener>
+@interface HotKeyManager : NSObject<DisplayKeyEventListener, MouseEventObserver>
 -(BOOL)setEnable:(BOOL)enable;
 @end

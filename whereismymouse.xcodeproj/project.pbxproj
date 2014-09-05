@@ -25,6 +25,7 @@
 		5320C7F51962B5D300393E5D /* ApplicationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5320C7F41962B5D300393E5D /* ApplicationManager.m */; };
 		5360DDA419810156005B62DD /* WakeupManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5360DDA319810156005B62DD /* WakeupManager.m */; };
 		53748DAC196F823800B74301 /* statusbarmenu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 53748DAB196F823800B74301 /* statusbarmenu_icon.png */; };
+		53757D1B19B962FF00A3ABE4 /* CursorShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53757D1A19B962FF00A3ABE4 /* CursorShowView.m */; };
 		5380698518F920B700511FBA /* OverlayWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5380698418F920B700511FBA /* OverlayWindow.xib */; };
 		538ED23119A5C5D600386695 /* ScreenNoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 538ED23019A5C5D600386695 /* ScreenNoView.m */; };
 		538ED23419A5D3BB00386695 /* ViewScreenNoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 538ED23319A5D3BB00386695 /* ViewScreenNoItem.m */; };
@@ -91,6 +92,8 @@
 		5360DDA219810156005B62DD /* WakeupManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WakeupManager.h; sourceTree = "<group>"; };
 		5360DDA319810156005B62DD /* WakeupManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WakeupManager.m; sourceTree = "<group>"; };
 		53748DAB196F823800B74301 /* statusbarmenu_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = statusbarmenu_icon.png; sourceTree = "<group>"; };
+		53757D1919B962FF00A3ABE4 /* CursorShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CursorShowView.h; sourceTree = "<group>"; };
+		53757D1A19B962FF00A3ABE4 /* CursorShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CursorShowView.m; sourceTree = "<group>"; };
 		5380698418F920B700511FBA /* OverlayWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverlayWindow.xib; sourceTree = "<group>"; };
 		538ED22F19A5C5D600386695 /* ScreenNoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenNoView.h; sourceTree = "<group>"; };
 		538ED23019A5C5D600386695 /* ScreenNoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenNoView.m; sourceTree = "<group>"; };
@@ -220,6 +223,8 @@
 			children = (
 				538ED22F19A5C5D600386695 /* ScreenNoView.h */,
 				538ED23019A5C5D600386695 /* ScreenNoView.m */,
+				53757D1919B962FF00A3ABE4 /* CursorShowView.h */,
+				53757D1A19B962FF00A3ABE4 /* CursorShowView.m */,
 			);
 			name = Display;
 			sourceTree = "<group>";
@@ -503,6 +508,7 @@
 				531BEC44196AC3DC003156CE /* EdgeCrossHelper.m in Sources */,
 				53D5830318E9382C001030A9 /* ShakeDetector.m in Sources */,
 				53201A6819A5BCD0009283F8 /* DDHotKeyCenter.m in Sources */,
+				53757D1B19B962FF00A3ABE4 /* CursorShowView.m in Sources */,
 				53201A6E19A5BCF4009283F8 /* HotKeyManager.m in Sources */,
 				53201A5B19A4978B009283F8 /* EdgeGuideHelper.m in Sources */,
 			);
