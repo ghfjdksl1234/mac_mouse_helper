@@ -79,6 +79,20 @@
 //    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:enable],  PREF_KEY_EDGE, nil];
     [preferences setBool:enable forKey:PREF_KEY_EDGE];
 }
+- (IBAction)onShowEdgeAlignGuide:(id)sender {
+    BOOL enable = YES;
+    switch (self.menuShowAlighGuide.state) {
+        case NSOnState:
+            [self.menuShowAlighGuide setState:NSOffState];
+            enable = NO;
+            break;
+        case NSOffState:
+            [self.menuShowAlighGuide setState:NSOnState];
+            enable = YES;
+            break;
+    }
+    [self.applicationManager setShowEdgeAlignGuide:enable];
+}
 
 + (BOOL) willStartAtLogin:(NSURL *)itemURL
 {

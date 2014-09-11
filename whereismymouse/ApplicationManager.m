@@ -11,6 +11,7 @@
 #import "ShakeManager.h"
 #import "EdgeCrossHelper.h"
 #import "HotKeyManager.h"
+#import "DisplayEdgeGuide.h"
 //#import "WakeupManager.h"
 
 @interface ApplicationManager()
@@ -18,6 +19,8 @@
 @property (strong, nonatomic) ShakeManager* shakeManager;
 @property (strong, nonatomic) EdgeCrossHelper* crossHelper;
 @property (strong, nonatomic) HotKeyManager* hotkeyManager;
+@property (strong, nonatomic) DisplayEdgeGuide* displayEdgeGuide;
+
 //@property (strong, nonatomic) WakeupManager* wakeupManager;
 @end
 
@@ -27,6 +30,7 @@
     [self setEnableShake:YES];
     [self setEnableCross:YES];
     [self setEnableHotKey:YES];
+    [self setShowEdgeAlignGuide:NO];
     // Can't use below because of delay after wakeup
 //    [self setEnableCenterAtWakeup:YES];
     
@@ -86,7 +90,15 @@
         [self.eventDistributor addObserver:self.hotkeyManager];
     } else if (enable == NO && self.hotkeyManager != nil) {
         [self.hotkeyManager setEnable:NO];
+        [self.eventDistributor removeObserver:self.hotkeyManager];
         self.hotkeyManager = nil;
+    }
+}
+- (void) setShowEdgeAlignGuide:(BOOL)enable {
+    if (enable == YES && self.displayEdgeGuide == nil) {
+        self.displayEdgeGuide = [[DisplayEdgeGuide alloc] init];
+    } else if (enable == NO && self.displayEdgeGuide != nil) {
+        self.displayEdgeGuide = nil;
     }
 }
 //- (void) setEnableCenterAtWakeup:(BOOL)enable {
@@ -109,6 +121,9 @@
 - (void)didChangeScreenParameters:(NSNotification *)notification {
     if (self.crossHelper != nil) {
         [self.crossHelper didChangeScreenParameters:notification];
+    }
+    if (self.displayEdgeGuide != nil) {
+        [self.displayEdgeGuide didChangeScreenParameters:notification];
     }
 }
 @end

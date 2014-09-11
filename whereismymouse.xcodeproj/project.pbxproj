@@ -29,6 +29,10 @@
 		5380698518F920B700511FBA /* OverlayWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5380698418F920B700511FBA /* OverlayWindow.xib */; };
 		538ED23119A5C5D600386695 /* ScreenNoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 538ED23019A5C5D600386695 /* ScreenNoView.m */; };
 		538ED23419A5D3BB00386695 /* ViewScreenNoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 538ED23319A5D3BB00386695 /* ViewScreenNoItem.m */; };
+		539E95A619BFE6AF00653A9E /* DisplayEdgeGuide.m in Sources */ = {isa = PBXBuildFile; fileRef = 539E95A519BFE6AF00653A9E /* DisplayEdgeGuide.m */; };
+		539E95A919BFE83C00653A9E /* ConnectedScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 539E95A819BFE83C00653A9E /* ConnectedScreen.m */; };
+		539E95AC19BFF91F00653A9E /* EdgeGuideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 539E95AB19BFF91F00653A9E /* EdgeGuideView.m */; };
+		539E95AF19C011EA00653A9E /* EdgeGuideView2.m in Sources */ = {isa = PBXBuildFile; fileRef = 539E95AE19C011EA00653A9E /* EdgeGuideView2.m */; };
 		53D582B918E7D98A001030A9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D582B818E7D98A001030A9 /* Cocoa.framework */; };
 		53D582C318E7D98A001030A9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 53D582C118E7D98A001030A9 /* InfoPlist.strings */; };
 		53D582C518E7D98A001030A9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D582C418E7D98A001030A9 /* main.m */; };
@@ -99,6 +103,14 @@
 		538ED23019A5C5D600386695 /* ScreenNoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenNoView.m; sourceTree = "<group>"; };
 		538ED23219A5D3BB00386695 /* ViewScreenNoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewScreenNoItem.h; sourceTree = "<group>"; };
 		538ED23319A5D3BB00386695 /* ViewScreenNoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewScreenNoItem.m; sourceTree = "<group>"; };
+		539E95A419BFE6AF00653A9E /* DisplayEdgeGuide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayEdgeGuide.h; sourceTree = "<group>"; };
+		539E95A519BFE6AF00653A9E /* DisplayEdgeGuide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayEdgeGuide.m; sourceTree = "<group>"; };
+		539E95A719BFE83C00653A9E /* ConnectedScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectedScreen.h; sourceTree = "<group>"; };
+		539E95A819BFE83C00653A9E /* ConnectedScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectedScreen.m; sourceTree = "<group>"; };
+		539E95AA19BFF91F00653A9E /* EdgeGuideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EdgeGuideView.h; sourceTree = "<group>"; };
+		539E95AB19BFF91F00653A9E /* EdgeGuideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EdgeGuideView.m; sourceTree = "<group>"; };
+		539E95AD19C011EA00653A9E /* EdgeGuideView2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EdgeGuideView2.h; sourceTree = "<group>"; };
+		539E95AE19C011EA00653A9E /* EdgeGuideView2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EdgeGuideView2.m; sourceTree = "<group>"; };
 		53D582B518E7D98A001030A9 /* whereismymouse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = whereismymouse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53D582B818E7D98A001030A9 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		53D582BB18E7D98A001030A9 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -229,6 +241,21 @@
 			name = Display;
 			sourceTree = "<group>";
 		};
+		539E95A319BFE68F00653A9E /* DisplayEdgeGuide */ = {
+			isa = PBXGroup;
+			children = (
+				539E95A419BFE6AF00653A9E /* DisplayEdgeGuide.h */,
+				539E95A519BFE6AF00653A9E /* DisplayEdgeGuide.m */,
+				539E95A719BFE83C00653A9E /* ConnectedScreen.h */,
+				539E95A819BFE83C00653A9E /* ConnectedScreen.m */,
+				539E95AA19BFF91F00653A9E /* EdgeGuideView.h */,
+				539E95AB19BFF91F00653A9E /* EdgeGuideView.m */,
+				539E95AD19C011EA00653A9E /* EdgeGuideView2.h */,
+				539E95AE19C011EA00653A9E /* EdgeGuideView2.m */,
+			);
+			name = DisplayEdgeGuide;
+			sourceTree = "<group>";
+		};
 		53D582AC18E7D98A001030A9 = {
 			isa = PBXGroup;
 			children = (
@@ -274,6 +301,7 @@
 		53D582BE18E7D98A001030A9 /* whereismymouse */ = {
 			isa = PBXGroup;
 			children = (
+				539E95A319BFE68F00653A9E /* DisplayEdgeGuide */,
 				53201A6119A5BC6B009283F8 /* HotkeyJump */,
 				5360DDA119810122005B62DD /* HOLD_WakeupManager */,
 				53201A5819A49776009283F8 /* HOLD_EdgeGuide */,
@@ -423,7 +451,6 @@
 				ORGANIZATIONNAME = "Choi Wonjoon";
 				TargetAttributes = {
 					53D582B418E7D98A001030A9 = {
-						DevelopmentTeam = 59WVM99KN6;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 1;
@@ -491,14 +518,18 @@
 				538ED23419A5D3BB00386695 /* ViewScreenNoItem.m in Sources */,
 				53D582CC18E7D98A001030A9 /* AppDelegate.m in Sources */,
 				53201A6A19A5BCD0009283F8 /* DDHotKeyUtilities.m in Sources */,
+				539E95A619BFE6AF00653A9E /* DisplayEdgeGuide.m in Sources */,
 				53201A5719A4970E009283F8 /* FPRangeStartEnd.m in Sources */,
 				53D582C518E7D98A001030A9 /* main.m in Sources */,
+				539E95AC19BFF91F00653A9E /* EdgeGuideView.m in Sources */,
 				531C7362190DF47F00681D5E /* MotionEventRegulator.m in Sources */,
 				53D582F018E8968D001030A9 /* OverlayWindow.m in Sources */,
 				5317AA00196913CC001554E8 /* DisplayManager.m in Sources */,
 				5320C7F51962B5D300393E5D /* ApplicationManager.m in Sources */,
+				539E95A919BFE83C00653A9E /* ConnectedScreen.m in Sources */,
 				53D582F618E929D0001030A9 /* ShakeManager.m in Sources */,
 				5360DDA419810156005B62DD /* WakeupManager.m in Sources */,
+				539E95AF19C011EA00653A9E /* EdgeGuideView2.m in Sources */,
 				53201A6919A5BCD0009283F8 /* DDHotKeyTextField.m in Sources */,
 				53F6D82119430E8600E6B3BB /* GrandCircleView.m in Sources */,
 				538ED23119A5C5D600386695 /* ScreenNoView.m in Sources */,
@@ -647,7 +678,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = whereismymouse/whereismymouse.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer: Wonjoon Choi (2YZ8KNA295)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -664,7 +694,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = whereismymouse/whereismymouse.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer: Wonjoon Choi (2YZ8KNA295)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

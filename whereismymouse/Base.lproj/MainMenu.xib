@@ -15,6 +15,7 @@
             <connections>
                 <outlet property="menuEnableCross" destination="jik-Op-KST" id="BTA-hG-Pii"/>
                 <outlet property="menuEnableShake" destination="lcR-cZ-T5Y" id="Qas-Uh-Nrz"/>
+                <outlet property="menuShowAlighGuide" destination="WNS-9H-5sk" id="VZi-UM-dwg"/>
                 <outlet property="statusMenu" destination="qcO-NG-GwZ" id="6fA-jM-iJr"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
@@ -49,6 +50,13 @@
                         <action selector="onEnableCross:" target="Voe-Tx-rLC" id="32F-Fz-Xkz"/>
                     </connections>
                 </menuItem>
+                <menuItem isSeparatorItem="YES" id="TZc-wG-fHU"/>
+                <menuItem title="Show Edge Align Guide" id="WNS-9H-5sk">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="onShowEdgeAlignGuide:" target="Voe-Tx-rLC" id="jki-tj-dHx"/>
+                    </connections>
+                </menuItem>
                 <menuItem isSeparatorItem="YES" id="DSX-7v-M7D"/>
                 <menuItem title="Quit" id="gWL-HX-eIj">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -59,5 +67,18 @@
             </items>
         </menu>
         <customObject id="CS0-LC-JXs" userLabel="MyWindowController"/>
+        <menu id="H0D-Ih-Rf0">
+            <items>
+                <menuItem title="Item 1" id="reg-Yr-q3n">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Item 2" id="alL-2B-g0a">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Item 3" id="iTq-u9-fHb">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+            </items>
+        </menu>
     </objects>
 </document>
