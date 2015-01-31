@@ -141,15 +141,16 @@
             } else {
                 newPos += MOVE_POSITION_BUFFER;
             }
-            if (floor(y) != y) {
-                y += 5;
-            } else {
-                y -= 5;
-            }
+//            if (floor(y) != y) {
+//                y += 5;
+//            } else {
+//                y -= 5;
+//            }
 
-            y = [NSScreen mainScreen].frame.size.height - y;
-            [ApplicationManager moveMouseToGlobalPos:CGPointMake(newPos, y)];
-//            CGWarpMouseCursorPosition(CGPointMake(newPos, y));
+//            y = [NSScreen mainScreen].frame.size.height - y;
+            //            [ApplicationManager moveMouseToGlobalPos:CGPointMake(newPos, 0)];
+            y = ((NSScreen*)[[NSScreen screens] objectAtIndex:0]).frame.size.height - y;
+            CGWarpMouseCursorPosition(CGPointMake(newPos, y));
         } else {
             self.isTrying = NO;
         }

@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Choi Wonjoon. All rights reserved.
 //
 
-#import "DisplayEdgeGuide.h"
+#import "DisplayEdgeGuideVertical.h"
 #import "ConnectedScreen.h"
 #import "ViewScreenNoItem.h"
 #import "DisplayManager.h"
@@ -16,14 +16,14 @@
 
 #define DISTANCE 200
 
-@interface DisplayEdgeGuide()
+@interface DisplayEdgeGuideVertical()
 //@property (strong, nonatomic) NSScreen* prevScreen;
 //@property (strong, nonatomic) NSMutableArray* connectedSList;
 @property (strong, nonatomic)NSMutableArray* viewList;
 @property CGFloat widthDistance, heightDistance;
 @end
 
-@implementation DisplayEdgeGuide
+@implementation DisplayEdgeGuideVertical
 -(id)init {
 //    int maxWidth, maxHeight;
     self = [super init];
@@ -68,7 +68,7 @@
             NSRect frame = screen.frame;
             NSRect rect = NSMakeRect(0, 0, frame.size.width, frame.size.height);
             
-            EdgeGuideView2* view = [[EdgeGuideView2 alloc] initWithFrame:rect orgX:frame.origin.x orgY:frame.origin.y colorDistance:self.heightDistance vertical:NO];
+            EdgeGuideView2* view = [[EdgeGuideView2 alloc] initWithFrame:rect orgX:frame.origin.x orgY:frame.origin.y colorDistance:self.heightDistance vertical:YES];
             [[DisplayManager getInstance] addView:view screenNo:index];
             [self.viewList addObject:[[ViewScreenNoItem alloc] initWithView:view screenNo:index]];
             index++;

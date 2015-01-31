@@ -12,6 +12,7 @@
 #import "EdgeCrossHelper.h"
 #import "HotKeyManager.h"
 #import "DisplayEdgeGuide.h"
+#import "DisplayEdgeGuideVertical.h"
 //#import "WakeupManager.h"
 
 @interface ApplicationManager()
@@ -20,6 +21,7 @@
 @property (strong, nonatomic) EdgeCrossHelper* crossHelper;
 @property (strong, nonatomic) HotKeyManager* hotkeyManager;
 @property (strong, nonatomic) DisplayEdgeGuide* displayEdgeGuide;
+@property (strong, nonatomic) DisplayEdgeGuide* displayEdgeGuideVertical;
 
 //@property (strong, nonatomic) WakeupManager* wakeupManager;
 @end
@@ -99,6 +101,13 @@
         self.displayEdgeGuide = [[DisplayEdgeGuide alloc] init];
     } else if (enable == NO && self.displayEdgeGuide != nil) {
         self.displayEdgeGuide = nil;
+    }
+}
+- (void) setShowEdgeAlignGuideVertical:(BOOL)enable {
+    if (enable == YES && self.displayEdgeGuideVertical == nil) {
+        self.displayEdgeGuideVertical = [[DisplayEdgeGuideVertical alloc] init];
+    } else if (enable == NO && self.displayEdgeGuideVertical != nil) {
+        self.displayEdgeGuideVertical = nil;
     }
 }
 //- (void) setEnableCenterAtWakeup:(BOOL)enable {

@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 @interface EdgeGuideView2 : NSView
-- (id)initWithFrame:(NSRect)frame orgX:(CGFloat)x orgY:(CGFloat)y colorDistance:(CGFloat)colorDistance;
+- (id)initWithFrame:(NSRect)frame orgX:(CGFloat)x orgY:(CGFloat)y colorDistance:(CGFloat)colorDistance vertical:(BOOL)vertical;
 //+(int)VERTICAL_GUIDE_COLORS;
 //+(int)HORIZONTAL_GUIDE_COLORS;
 

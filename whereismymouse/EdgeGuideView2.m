@@ -14,6 +14,7 @@ static NSArray* horizontalColors;
 @interface EdgeGuideView2()
 @property CGFloat orgX, orgY;
 @property CGFloat colorDistance;
+@property BOOL vertical;
 @end
 
 static void initColors() {
@@ -26,7 +27,7 @@ static void initColors() {
 }
 @implementation EdgeGuideView2
 
-- (id)initWithFrame:(NSRect)frame orgX:(CGFloat)x orgY:(CGFloat)y colorDistance:(CGFloat)colorDistance
+- (id)initWithFrame:(NSRect)frame orgX:(CGFloat)x orgY:(CGFloat)y colorDistance:(CGFloat)colorDistance vertical:(BOOL)vertical
 {
     initColors();
     self = [super initWithFrame:frame];
@@ -34,6 +35,10 @@ static void initColors() {
         self.orgX = x;
         self.orgY = y;
         self.colorDistance = colorDistance;
+        self.vertical = vertical;
+        if (vertical) {
+            colorDistance *= 1.5;
+        }
         
         [self setAlphaValue:1];
     }
@@ -47,44 +52,46 @@ static void initColors() {
     int colorIndex = 0;
     CGFloat red, green, blue;
     @try {
-    for (CGFloat y = -self.orgY + self.colorDistance ; y < self.frame.size.height ; y += self.colorDistance) {
-        NSBezierPath* path = [NSBezierPath bezierPath];
-        color = [verticalColors objectAtIndex:colorIndex];
-        red = [color redComponent];
-        green = [color greenComponent];
-        blue = [color blueComponent];
-        color = [NSColor colorWithCalibratedRed:red green:green blue:blue alpha:0.3];
-        [color setStroke];
-        [path moveToPoint:NSMakePoint(0, y)];
-        [path lineToPoint:NSMakePoint(self.frame.size.width, y)];
-        [path setLineWidth:20];
-        [path stroke];
-        colorIndex++;
-        if (verticalColors.count <= colorIndex) {
+        if (self.vertical == false) {
+            for (CGFloat y = ((int)-self.orgY % (int)self.colorDistance) + self.colorDistance ; y < self.frame.size.height ; y += self.colorDistance) {
+                NSBezierPath* path = [NSBezierPath bezierPath];
+                color = [verticalColors objectAtIndex:colorIndex];
+                red = [color redComponent];
+                green = [color greenComponent];
+                blue = [color blueComponent];
+                color = [NSColor colorWithCalibratedRed:red green:green blue:blue alpha:0.3];
+                [color setStroke];
+                [path moveToPoint:NSMakePoint(0, y)];
+                [path lineToPoint:NSMakePoint(self.frame.size.width, y)];
+                [path setLineWidth:20];
+                [path stroke];
+                colorIndex++;
+                if (verticalColors.count <= colorIndex) {
+                    colorIndex = 0;
+                }
+                [path closePath];
+            }
+        } else {
             colorIndex = 0;
+            for (CGFloat x = self.orgX + self.colorDistance ; x < self.frame.size.width; x += self.colorDistance) {
+                NSBezierPath* path = [NSBezierPath bezierPath];
+                color = [horizontalColors objectAtIndex:colorIndex];
+                red = [color redComponent];
+                green = [color greenComponent];
+                blue = [color blueComponent];
+                color = [NSColor colorWithCalibratedRed:red green:green blue:blue alpha:0.5];
+                [color setStroke];
+                [path moveToPoint:NSMakePoint(x, 0)];
+                [path lineToPoint:NSMakePoint(x, self.frame.size.height)];
+                [path setLineWidth:20];
+                [path stroke];
+                colorIndex++;
+                if (horizontalColors.count <= colorIndex) {
+                    colorIndex = 0;
+                }
+                [path closePath];
+            }
         }
-        [path closePath];
-    }
-    
-//    colorIndex = 0;
-//    for (CGFloat x = -self.orgX + self.colorDistance * 1.5 ; x < self.frame.size.width; x += self.colorDistance * 1.5) {
-//        NSBezierPath* path = [NSBezierPath bezierPath];
-//        color = [horizontalColors objectAtIndex:colorIndex];
-//        red = [color redComponent];
-//        green = [color greenComponent];
-//        blue = [color blueComponent];
-//        color = [NSColor colorWithCalibratedRed:red green:green blue:blue alpha:0.5];
-//        [color setStroke];
-//        [path moveToPoint:NSMakePoint(x, 0)];
-//        [path lineToPoint:NSMakePoint(x, self.frame.size.height)];
-//        [path setLineWidth:20];
-//        [path stroke];
-//        colorIndex++;
-//        if (horizontalColors.count <= colorIndex) {
-//            colorIndex = 0;
-//        }
-//        [path closePath];
-//    }
     } @catch(NSException *err) {
         err = nil;
         

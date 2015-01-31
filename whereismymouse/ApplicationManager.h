@@ -14,6 +14,7 @@
 - (void) setEnableShake:(BOOL)enable;
 - (void) setEnableCross:(BOOL)enable;
 - (void) setShowEdgeAlignGuide:(BOOL)enable;
+- (void) setShowEdgeAlignGuideVertical:(BOOL)enable;
 //- (void) setEnableCenterAtWakeup:(BOOL)enable;
 
 + (void) moveMouseToGlobalPos:(CGPoint)point;

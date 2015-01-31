@@ -17,6 +17,7 @@
 @property (strong, nonatomic) ApplicationManager* applicationManager;
 @property (weak) IBOutlet NSMenuItem *menuEnableShake;
 @property (weak) IBOutlet NSMenuItem *menuEnableCross;
-@property (weak) IBOutlet NSMenuItem *menuShowAlighGuide;
+@property (weak) IBOutlet NSMenuItem *menuShowAlighGuideHorLine;
+@property (weak) IBOutlet NSMenuItem *menuShowAlignGuideVertLine;
 
 @end
