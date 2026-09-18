@@ -122,7 +122,12 @@ public enum DisplayGeometry {
     public static func physicalGuidePositions(height: CGFloat, millimeters: CGFloat,
                                               count: Int, spacing: CGFloat, offset: CGFloat) -> [CGFloat] {
         guard count > 0, height > 0 else { return [] }
-        let pointsPerMM = millimeters > 0 ? height / millimeters : 96.0 / 25.4
-        return (0..<count).map { height / 2 + (CGFloat($0 - count / 2) * spacing + offset) * pointsPerMM }
+        let pointsPerMM: CGFloat = millimeters > 0 ? height / millimeters : 96.0 / 25.4
+        let centerY = height / 2
+        let centerIndex = count / 2
+        return (0..<count).map { index -> CGFloat in
+            let distanceInMM = CGFloat(index - centerIndex) * spacing + offset
+            return centerY + distanceInMM * pointsPerMM
+        }
     }
 }
