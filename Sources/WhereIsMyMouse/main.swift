@@ -4,9 +4,24 @@ import Carbon
 import ServiceManagement
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    let model = AppModel()
+    let model: AppModel
+    private let defaults: UserDefaults
+    private let smokeDefaultsName: String?
     private var statusItem: NSStatusItem!
     private var window: NSWindow?
+
+    override init() {
+        if CommandLine.arguments.contains("--smoke-test") {
+            let name = "com.inbedsoft.WhereIsMyMouse.smoke.\(UUID().uuidString)"
+            smokeDefaultsName = name
+            defaults = UserDefaults(suiteName: name)!
+        } else {
+            smokeDefaultsName = nil
+            defaults = .standard
+        }
+        model = AppModel(settings: Settings(defaults: defaults))
+        super.init()
+    }
 
     func applicationWillFinishLaunching(_ notification: Notification) {
         // LSUIElement in the bundle and accessory policy both keep this utility
@@ -37,12 +52,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         updateMenu()
         let event = NSAppleEventManager.shared().currentAppleEvent
         let launchedAtLogin = event?.paramDescriptor(forKeyword: AEKeyword(keyAEPropData))?.enumCodeValue == OSType(keyAELaunchedAsLogInItem)
-        let firstLaunch = !UserDefaults.standard.bool(forKey: "hasLaunched")
+        let firstLaunch = !defaults.bool(forKey: "hasLaunched")
         let explicitSettings = CommandLine.arguments.contains("--settings") || CommandLine.arguments.contains("--smoke-test")
         if explicitSettings || (firstLaunch && !launchedAtLogin && !CommandLine.arguments.contains("--background")) {
             if CommandLine.arguments.contains("--enable-login") { model.selectedPage = .general }
             showSettings()
-            UserDefaults.standard.set(true, forKey: "hasLaunched")
+            defaults.set(true, forKey: "hasLaunched")
         }
         if let index = CommandLine.arguments.firstIndex(of: "--runtime-report"), CommandLine.arguments.count > index + 1 {
             let path = CommandLine.arguments[index + 1]
@@ -55,7 +70,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
         showSettings(); return true
     }
-    func applicationWillTerminate(_ notification: Notification) { model.stop() }
+    func applicationWillTerminate(_ notification: Notification) {
+        model.stop()
+        if let smokeDefaultsName { defaults.removePersistentDomain(forName: smokeDefaultsName) }
+    }
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { false }
     func applicationShouldSaveApplicationState(_ app: NSApplication) -> Bool { false }
     func applicationShouldRestoreApplicationState(_ app: NSApplication) -> Bool { false }
@@ -89,8 +107,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let locate = add(menu, "Locate pointer", #selector(locatePointer), key: "l")
         locate.keyEquivalentModifierMask = [.control, .option, .command]
         locate.isEnabled = !model.settings.paused
-        add(menu, "Shake to locate", #selector(toggleLocate)).state = model.settings.locateEnabled ? .on : .off
-        add(menu, "Help crossing displays", #selector(toggleCrossing)).state = model.settings.crossingEnabled ? .on : .off
+        let shake = add(menu, "Shake to locate", #selector(toggleLocate))
+        shake.state = model.locateReady ? .on : model.settings.locateEnabled ? .mixed : .off
+        shake.toolTip = "A dash means permission setup is pending. Click again to cancel."
+        let crossing = add(menu, "Help crossing displays", #selector(toggleCrossing))
+        crossing.state = model.crossingReady ? .on : model.settings.crossingEnabled ? .mixed : .off
+        crossing.toolTip = shake.toolTip
         menu.addItem(.separator())
         let guides = add(menu, "Alignment guides", #selector(toggleGuides), key: "a")
         guides.keyEquivalentModifierMask = [.control, .option, .command]
@@ -100,19 +122,22 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let login = add(menu, "Launch at login", #selector(toggleLogin))
         login.state = model.loginNeedsApproval ? .mixed : model.loginEnabled ? .on : .off
         add(menu, "Settings…", #selector(showSettings), key: ",")
-        let quit = menu.addItem(withTitle: "Quit Where is My Mouse?", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
-        quit.target = NSApp
+        // A standard terminate: action gains an automatic icon on Tahoe,
+        // indenting this section alone. Keep the status menu uniformly text-only.
+        add(menu, "Quit Where is My Mouse?", #selector(quitHelper), key: "q")
         statusItem.menu = menu
         statusItem.button?.appearsDisabled = model.settings.paused
     }
     @discardableResult private func add(_ menu: NSMenu, _ title: String, _ action: Selector, key: String = "") -> NSMenuItem {
         let item = menu.addItem(withTitle: title, action: action, keyEquivalent: key)
         item.target = self
+        item.indentationLevel = 0
         return item
     }
     @objc private func locatePointer() { model.locate() }
-    @objc private func toggleLocate() { model.settings.locateEnabled.toggle() }
-    @objc private func toggleCrossing() { model.settings.crossingEnabled.toggle() }
+    @objc private func toggleLocate() { model.setLocateEnabled(!model.settings.locateEnabled) }
+    @objc private func toggleCrossing() { model.setCrossingEnabled(!model.settings.crossingEnabled) }
+    @objc private func quitHelper() { NSApp.terminate(nil) }
     @objc private func toggleGuides() { model.toggleGuides() }
     @objc private func togglePause() { model.settings.paused.toggle() }
     @objc private func toggleLogin() { model.setLogin(!(model.loginEnabled || model.loginNeedsApproval)) }
@@ -158,6 +183,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             "inputMonitoring": model.inputAllowed,
             "accessibility": model.accessibilityAllowed,
             "mouseMonitoringActive": model.monitoring,
+            "locateRequested": model.settings.locateEnabled,
+            "crossingRequested": model.settings.crossingEnabled,
+            "locateReady": model.locateReady,
+            "crossingReady": model.crossingReady,
             "guideCount": model.settings.guideCount,
             "guideThickness": model.settings.guideThickness,
             "guideSpacing": model.settings.guideSpacing,
@@ -176,6 +205,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let url = URL(fileURLWithPath: directory, isDirectory: true)
         do { try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true) }
         catch { fputs("Smoke test output: \(error)\n", stderr); NSApp.terminate(nil); return }
+        guard !model.settings.locateEnabled, !model.settings.crossingEnabled,
+              let menu = statusItem.menu,
+              menu.items.allSatisfy({ $0.indentationLevel == 0 }),
+              menu.items.first(where: { $0.title == "Shake to locate" })?.state == .off,
+              menu.items.first(where: { $0.title == "Help crossing displays" })?.state == .off,
+              menu.items.last?.action == #selector(quitHelper) else {
+            fputs("SMOKE FAIL: fresh feature defaults or status menu configuration.\n", stderr)
+            model.stop(); exit(EXIT_FAILURE)
+        }
         func capture(_ index: Int) {
             if index >= SettingsPage.allCases.count {
                 guard AppBundleDragSource.validateFileURLPayload() else {

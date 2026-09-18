@@ -16,6 +16,13 @@ struct SettingsView: View {
 
     init(model: AppModel) { self.model = model; settings = model.settings; displays = model.displays }
 
+    private var locateBinding: Binding<Bool> {
+        Binding(get: { settings.locateEnabled }, set: model.setLocateEnabled)
+    }
+    private var crossingBinding: Binding<Bool> {
+        Binding(get: { settings.crossingEnabled }, set: model.setCrossingEnabled)
+    }
+
     var body: some View {
         HStack(spacing: 0) {
             sidebar
@@ -106,8 +113,8 @@ struct SettingsView: View {
             }
             workspacePreview
             VStack(spacing: 12) {
-                featureRow("Locate in a shake", detail: "A circle brings your eyes right to your pointer.", icon: "scope", enabled: $settings.locateEnabled, page: .locate)
-                featureRow("Keep moving", detail: "A gentle hand across mismatched display edges.", icon: "arrow.right.to.line", enabled: $settings.crossingEnabled, page: .crossing)
+                featureRow("Locate in a shake", detail: "A circle brings your eyes right to your pointer.", icon: "scope", enabled: locateBinding, page: .locate)
+                featureRow("Keep moving", detail: "A gentle hand across mismatched display edges.", icon: "arrow.right.to.line", enabled: crossingBinding, page: .crossing)
                 featureRow("Get things lined up", detail: "Guides that help your screens see eye to eye.", icon: "line.3.horizontal", enabled: $settings.guidesVisible, page: .alignment)
             }
             if !model.monitoring && !settings.paused && (settings.locateEnabled || settings.crossingEnabled) {
@@ -167,7 +174,10 @@ struct SettingsView: View {
         VStack(alignment: .leading, spacing: 23) {
             heading("Locate pointer", "A shake. A circle. There it is.", subtitle: "Shake your mouse back and forth to find your place.")
             section {
-                switchRow("Shake to locate", detail: "The original red–yellow–red ring contracts from the farthest corner of your displays.", value: $settings.locateEnabled)
+                switchRow("Shake to locate", detail: "The original red–yellow–red ring contracts from the farthest corner of your displays.", value: locateBinding)
+                if settings.locateEnabled && !model.locateReady {
+                    setupLink("Waiting for Input Monitoring. The feature starts after you grant access.")
+                }
                 Divider()
                 sliderRow("Shake sensitivity", value: $settings.shakeSensitivity, range: 0...1, low: "Deliberate", high: "Light shake")
             }
@@ -189,7 +199,10 @@ struct SettingsView: View {
         VStack(alignment: .leading, spacing: 23) {
             heading("Cross displays", "Keep your momentum.", subtitle: "No more getting caught on the way to another screen.")
             section {
-                switchRow("Help at blocked edges", detail: "Keep pushing gently to cross to the neighboring display.", value: $settings.crossingEnabled)
+                switchRow("Help at blocked edges", detail: "Keep pushing gently to cross to the neighboring display.", value: crossingBinding)
+                if settings.crossingEnabled && !model.crossingReady {
+                    setupLink("Waiting for permissions. Crossing starts after Input Monitoring and Accessibility are enabled.")
+                }
                 Divider()
                 sliderRow("Edge resistance", value: $settings.edgeResistance, range: 0...1, low: "Quick crossing", high: "Deliberate push")
             }
