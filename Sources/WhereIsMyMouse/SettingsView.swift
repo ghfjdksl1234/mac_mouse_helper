@@ -81,13 +81,9 @@ struct SettingsView: View {
                 }.buttonStyle(.plain).padding(.bottom, 4)
             }
             Spacer(minLength: 40)
-            VStack(alignment: .leading, spacing: 10) {
-                HStack(spacing: 7) {
-                    Circle().fill(settings.paused ? Color.orange : model.monitoring ? Palette.green : Color.orange).frame(width: 6, height: 6)
-                    Text(model.status).font(.system(size: 11, weight: .medium))
-                }
-                Button(settings.paused ? "Resume helpers" : "Pause helpers") { settings.paused.toggle() }
-                    .font(.system(size: 11)).buttonStyle(.plain).foregroundStyle(Palette.muted)
+            HStack(spacing: 7) {
+                Circle().fill(settings.paused ? Color.orange : model.monitoring ? Palette.green : Color.orange).frame(width: 6, height: 6)
+                Text(model.status).font(.system(size: 11, weight: .medium))
             }.padding(12).frame(maxWidth: .infinity, alignment: .leading)
                 .background(.white.opacity(0.65), in: RoundedRectangle(cornerRadius: 10))
             Text("A small utility. A smoother day.")
