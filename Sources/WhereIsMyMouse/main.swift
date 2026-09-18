@@ -3,15 +3,18 @@ import SwiftUI
 import Carbon
 import ServiceManagement
 
-final class AppDelegate: NSObject, NSApplicationDelegate {
+final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     let model: AppModel
     private let defaults: UserDefaults
     private let smokeDefaultsName: String?
+    private let isVerificationRun: Bool
     private var statusItem: NSStatusItem!
     private var window: NSWindow?
 
     override init() {
-        if CommandLine.arguments.contains("--smoke-test") {
+        let verifying = CommandLine.arguments.contains("--smoke-test") || CommandLine.arguments.contains("--settings-lifecycle-test")
+        isVerificationRun = verifying
+        if verifying {
             let name = "com.inbedsoft.WhereIsMyMouse.smoke.\(UUID().uuidString)"
             smokeDefaultsName = name
             defaults = UserDefaults(suiteName: name)!
@@ -24,14 +27,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationWillFinishLaunching(_ notification: Notification) {
-        // LSUIElement in the bundle and accessory policy both keep this utility
-        // out of the Dock, including while the settings window is open.
+        // Background and login launches stay in the menu bar. Opening Settings
+        // temporarily promotes the app so it is reachable with Command-Tab.
         NSApp.setActivationPolicy(.accessory)
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         let bundleID = Bundle.main.bundleIdentifier ?? "com.inbedsoft.WhereIsMyMouse"
-        if !CommandLine.arguments.contains("--smoke-test"),
+        if !isVerificationRun,
            let running = NSRunningApplication.runningApplications(withBundleIdentifier: bundleID).first(where: { $0.processIdentifier != ProcessInfo.processInfo.processIdentifier }) {
             running.activate(options: [.activateAllWindows])
             NSApp.terminate(nil)
@@ -53,7 +56,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let event = NSAppleEventManager.shared().currentAppleEvent
         let launchedAtLogin = event?.paramDescriptor(forKeyword: AEKeyword(keyAEPropData))?.enumCodeValue == OSType(keyAELaunchedAsLogInItem)
         let firstLaunch = !defaults.bool(forKey: "hasLaunched")
-        let explicitSettings = CommandLine.arguments.contains("--settings") || CommandLine.arguments.contains("--smoke-test")
+        let explicitSettings = CommandLine.arguments.contains("--settings") || isVerificationRun
         if explicitSettings || (firstLaunch && !launchedAtLogin && !CommandLine.arguments.contains("--background")) {
             if CommandLine.arguments.contains("--enable-login") { model.selectedPage = .general }
             showSettings()
@@ -65,6 +68,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
         if let index = CommandLine.arguments.firstIndex(of: "--smoke-test"), CommandLine.arguments.count > index + 1 {
             runSmokeTest(directory: CommandLine.arguments[index + 1])
+        }
+        if let index = CommandLine.arguments.firstIndex(of: "--settings-lifecycle-test"), CommandLine.arguments.count > index + 1 {
+            let directory = URL(fileURLWithPath: CommandLine.arguments[index + 1], isDirectory: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [self] in
+                verifySettingsLifecycle(directory: directory) {
+                    print("SMOKE PASS: Settings activation lifecycle.")
+                    NSApp.terminate(nil)
+                }
+            }
         }
     }
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
@@ -87,6 +99,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         appMenu.addItem(withTitle: "Quit Where is My Mouse?", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         appItem.submenu = appMenu
         menu.addItem(appItem)
+        let fileItem = NSMenuItem()
+        let file = NSMenu(title: "File")
+        file.addItem(withTitle: "Close Window", action: #selector(NSWindow.performClose(_:)), keyEquivalent: "w")
+        fileItem.submenu = file; menu.addItem(fileItem)
         let editItem = NSMenuItem()
         let edit = NSMenu(title: "Edit")
         edit.addItem(withTitle: "Copy", action: #selector(NSText.copy(_:)), keyEquivalent: "c")
@@ -142,6 +158,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @objc private func togglePause() { model.settings.paused.toggle() }
     @objc private func toggleLogin() { model.setLogin(!(model.loginEnabled || model.loginNeedsApproval)) }
     @objc func showSettings() {
+        if NSApp.activationPolicy() != .regular { NSApp.setActivationPolicy(.regular) }
         if window == nil {
             let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 940, height: 710),
                                   styleMask: [.titled, .closable, .miniaturizable, .resizable], backing: .buffered, defer: false)
@@ -151,13 +168,30 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             window.minSize = NSSize(width: 900, height: 710)
             window.isReleasedWhenClosed = false
             window.isRestorable = false
+            window.delegate = self
             window.contentView = NSHostingView(rootView: SettingsView(model: model))
             window.center()
             self.window = window
         }
         model.refreshPermissions()
+        NSApp.unhide(nil)
+        if window?.isMiniaturized == true { window?.deminiaturize(nil) }
         window?.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
+        // AppKit finishes activation-policy transitions on the next run-loop
+        // turn. Give the settings window keyboard focus after that transition.
+        DispatchQueue.main.async { [weak self] in
+            guard let window = self?.window, window.isVisible else { return }
+            NSApp.activate(ignoringOtherApps: true)
+            window.makeKeyAndOrderFront(nil)
+        }
+    }
+
+    func windowWillClose(_ notification: Notification) {
+        guard let closingWindow = notification.object as? NSWindow, closingWindow === window else { return }
+        // Losing focus, hiding, or minimizing is not closing: keep Settings in
+        // Command-Tab until the user actually closes it. Helpers keep running.
+        NSApp.setActivationPolicy(.accessory)
     }
 
     /// Development/install verification reads the actual running app's state.
@@ -177,8 +211,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             "version": Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "",
             "processID": ProcessInfo.processInfo.processIdentifier,
             "noDockIcon": NSApp.activationPolicy() == .accessory,
+            "activationPolicy": NSApp.activationPolicy() == .regular ? "regular" : "accessory",
             "statusItemVisible": statusItem?.isVisible ?? false,
             "settingsVisible": window?.isVisible ?? false,
+            "settingsMiniaturized": window?.isMiniaturized ?? false,
+            "settingsCanMiniaturize": window?.isMiniaturizable ?? false,
             "loginStatus": login,
             "inputMonitoring": model.inputAllowed,
             "accessibility": model.accessibilityAllowed,
@@ -239,8 +276,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.7) { [self] in
                         model.settings.guidesVisible = false
                         model.overlays.settingsChanged()
-                        print("SMOKE PASS: 5 settings views, floating permission helper, real app file-URL drag payload, colored guides, locator, pointer overlay, cleanup. Displays: \(model.displays.monitors.count). Input: \(model.inputAllowed). Accessibility: \(model.accessibilityAllowed).")
-                        NSApp.terminate(nil)
+                        verifySettingsLifecycle(directory: url) {
+                            print("SMOKE PASS: Settings activation lifecycle, 5 settings views, floating permission helper, real app file-URL drag payload, colored guides, locator, pointer overlay, cleanup. Displays: \(self.model.displays.monitors.count). Input: \(self.model.inputAllowed). Accessibility: \(self.model.accessibilityAllowed).")
+                            NSApp.terminate(nil)
+                        }
                     }
                 }
                 return
@@ -258,6 +297,55 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { capture(0) }
+    }
+
+    /// Exercise actual AppKit transitions without changing the installed app's
+    /// preferences or permissions. Allow each transition a run-loop turn.
+    private func verifySettingsLifecycle(directory: URL, completion: @escaping () -> Void) {
+        guard let window else { model.stop(); exit(EXIT_FAILURE) }
+        do { try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true) }
+        catch { fputs("SMOKE FAIL: \(error)\n", stderr); model.stop(); exit(EXIT_FAILURE) }
+        let wasPaused = model.settings.paused
+        let checks: [(String, () -> Void, () -> Bool)] = [
+            ("settings-open", {}, { window.isVisible && NSApp.activationPolicy() == .regular }),
+            ("settings-hidden", { NSApp.hide(nil) }, { NSApp.isHidden && NSApp.activationPolicy() == .regular }),
+            ("settings-unhidden", { self.showSettings() }, { !NSApp.isHidden && window.isVisible && NSApp.activationPolicy() == .regular }),
+            ("settings-closed", { window.performClose(nil) }, { !window.isVisible && NSApp.activationPolicy() == .accessory }),
+            ("settings-reopened", { self.showSettings() }, { window.isVisible && self.window === window && NSApp.activationPolicy() == .regular }),
+            ("settings-closed-again", { window.performClose(nil) }, { !window.isVisible && NSApp.activationPolicy() == .accessory })
+        ]
+        func check(_ index: Int) {
+            guard index < checks.count else { completion(); return }
+            let (name, action, condition) = checks[index]
+            action()
+            func verify(attemptsRemaining: Int) {
+                if !condition() && attemptsRemaining > 0 {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { verify(attemptsRemaining: attemptsRemaining - 1) }
+                    return
+                }
+                let state: [String: Any] = [
+                    "activationPolicy": NSApp.activationPolicy() == .regular ? "regular" : "accessory",
+                    "settingsVisible": window.isVisible, "settingsMiniaturized": window.isMiniaturized,
+                    "settingsCanMiniaturize": window.isMiniaturizable,
+                    "appActive": NSApp.isActive, "windowKey": window.isKeyWindow,
+                    "statusItemVisible": statusItem.isVisible, "appRunning": NSApp.isRunning
+                ]
+                do {
+                    let data = try JSONSerialization.data(withJSONObject: state, options: [.prettyPrinted, .sortedKeys])
+                    try data.write(to: directory.appendingPathComponent("\(name).json"))
+                } catch { fputs("SMOKE FAIL: \(error)\n", stderr); model.stop(); exit(EXIT_FAILURE) }
+                guard condition(), statusItem.isVisible, NSApp.isRunning, model.settings.paused == wasPaused else {
+                    fputs("SMOKE FAIL: \(name) activation policy or helper lifecycle.\n", stderr)
+                    model.stop(); exit(EXIT_FAILURE)
+                }
+                print("SMOKE PASS: \(name)")
+                check(index + 1)
+            }
+            // AppKit transitions complete asynchronously; wait for the actual
+            // state rather than assuming a fixed duration.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { verify(attemptsRemaining: 30) }
+        }
+        check(0)
     }
 }
 
