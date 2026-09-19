@@ -2,6 +2,8 @@
 
 Use the packaged app, preferably from a stable location in Applications. Keep one running copy. These checks intentionally require real movement and observation rather than synthetic pointer events.
 
+For a focused native Settings lifecycle check, run the packaged executable with `--settings-lifecycle-test /tmp/mouse-settings-check`. It uses isolated preferences, verifies open/hide/unhide/close/reopen activation policies and the persistent status item, writes state reports, then exits. It does not request permissions. Actual Command-Tab selection and minimize/restore remain interactive checks below.
+
 ## Permissions and lifecycle
 
 - A first launch shows settings without prompting for permissions. Previews and guides work immediately.
@@ -14,7 +16,8 @@ Use the packaged app, preferably from a stable location in Applications. Keep on
 - Revoke access: General reflects the change, and crossing no longer occurs.
 - Use the floating permission helper with System Settings frontmost: drag the app tile into Input Monitoring. Verify the exact installed `.app` is supplied and the original app remains in place. A drop must not be treated as authorization until macOS reports permission granted. Repeat for Accessibility.
 - Cancel a drag, then try Show in Finder and Copy app path → + → Shift–Command–G as alternatives. The helper should stay visible above System Settings, remain movable, and close normally.
-- Close the settings window: helpers remain active and are available from the menu bar.
+- Open Settings, switch to another app, and use Command-Tab to return. The app appears in both the switcher and Dock while Settings is open, including while hidden or minimized. Reopening through the Dock or menu restores the same settings window.
+- Close Settings with its close button and Command-W: the app leaves the switcher and Dock, while helpers remain active in the menu bar. Repeat opening and closing, including after minimizing. A background/login launch has neither a settings window nor a Dock icon.
 - Pause/resume, sleep/wake, lock/unlock, switch Spaces, and enter a full-screen app. No frozen overlays or unexpected pointer motion should remain.
 - Disconnect, rearrange, rotate, and reconnect a monitor with guides visible. Panels rebuild, old guides disappear, and the display count updates.
 - Turn login launch on, verify in Login Items, then off. If approval is needed, the UI should reflect that rather than falsely showing enabled.

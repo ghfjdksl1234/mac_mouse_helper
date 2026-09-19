@@ -62,3 +62,10 @@ The test suite validates the detection and geometry logic. It does **not** prove
 - Native smoke test uses an isolated preference suite and verifies fresh features are unchecked and all menu indentation levels are zero. The status-menu Quit action now uses an app-owned selector so Tahoe does not add a lone standard-action icon column to the last section. The main application menu retains its standard Quit action.
 - Enabling either feature from the status menu or either Settings location calls the same permission setup methods, including opening the System Settings pane directly after a prior denial. Old macOS registration is not needed to explain the original failure: the old toggle handlers never called those methods.
 - Real OS permission grants, reopening after macOS requests a restart, and final visual menu alignment are manual acceptance checks in `docs/TESTING.md`. No privacy grants or installed-app preferences were changed by these checks.
+
+## Settings in Command-Tab (1.0.4)
+
+- Settings promotes the app from accessory to regular activation policy so it participates in the Dock and app switcher. Closing that window returns to accessory mode; hiding it or changing focus does not. Login/background launch still starts as an accessory. Command-W closes Settings without quitting the helpers.
+- Universal release build, code signature, ZIP integrity, and extracted-app architecture/signature verification passed.
+- Full native smoke check passed, including all five settings views, permission drag payload, overlays, and six Settings lifecycle states. The focused lifecycle check also passed through Launch Services: open, hidden, unhidden, closed, reopened, and closed again. Reports confirm regular/accessory transitions, the persistent status item, and a running app after each close. Test preferences are isolated from the installed app.
+- Actual Command-Tab selection and minimize/restore remain manual acceptance checks. Programmatic minimization did not complete in this session for either the app or a separate plain AppKit test window, so it is not claimed as verified. No installed app or system privacy permissions were changed.
