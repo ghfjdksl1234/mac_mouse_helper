@@ -2,7 +2,7 @@
 
 A native macOS recreation of the original [Where is My Mouse?](https://macnews.tistory.com/4007). A small menu-bar utility for finding your pointer, getting past blocked display edges, and physically lining up monitors.
 
-This project is public simply to share the prebuilt macOS app with anyone who may find it useful.
+**This project is public simply to share the prebuilt macOS app with anyone who may find it useful.**
 
 Requires macOS 13 Ventura or later. Written in Swift, AppKit, and SwiftUI, with no third-party dependencies and no network access.
 
