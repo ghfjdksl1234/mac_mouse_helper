@@ -4,6 +4,8 @@ A native macOS recreation of the original [Where is My Mouse?](https://macnews.t
 
 > [!NOTE]
 > **This project is public simply to share the prebuilt macOS app with anyone who may find it useful.**
+>
+> The source code is not intended as a showcase of code quality or an example of best practices.
 
 Requires macOS 13 Ventura or later. Written in Swift, AppKit, and SwiftUI, with no third-party dependencies and no network access.
 
