@@ -8,7 +8,11 @@ Requires macOS 13 Ventura or later. Written in Swift, AppKit, and SwiftUI, with 
 
 ## GitHub builds and downloads
 
-The [Build macOS app workflow](https://github.com/macgebi/mac_mouse_helper/actions/workflows/macos.yml) tests and builds the modern Swift app on each push and pull request. Open a successful run and download **Where-is-My-Mouse-macOS-universal** under **Artifacts**. Extract the artifact, then the app ZIP inside it, and move `Where is My Mouse.app` into Applications. The same app supports Apple Silicon and Intel Macs running macOS 13 or later.
+**[Download for macOS](https://github.com/macgebi/mac_mouse_helper/releases/latest/download/Where-is-My-Mouse-macOS-universal.zip)** — no GitHub account required. The same app supports Apple Silicon and Intel Macs running macOS 13 or later. Unzip it and move `Where is My Mouse.app` into Applications.
+
+From the repository page, open **Releases → Latest → Assets** and select **Where-is-My-Mouse-macOS-universal.zip**. The optional `.sha256` file lets you verify the download.
+
+The [Build macOS app workflow](https://github.com/macgebi/mac_mouse_helper/actions/workflows/macos.yml) tests and builds the modern Swift app on each push and pull request. Development builds remain available under a successful run’s **Artifacts**, which require GitHub sign-in and expire after 14 days.
 
 These initial builds are ad-hoc signed, without Apple notarization. See [GitHub builds and releases](docs/GITHUB.md) for first-launch approval, version tags, draft releases, and the later Developer ID signing setup. No Apple credentials or manually created GitHub secrets are needed for the current workflow.
 
