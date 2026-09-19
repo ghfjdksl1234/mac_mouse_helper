@@ -2,7 +2,7 @@ import AppKit
 
 /// Preserve the original GrandCircleView's appearance: users with low vision
 /// found this specific red–yellow–red band helpful. Keep this independent of the
-/// app's decorative palette. Source: macgebi/mac_mouse_helper, GrandCircleView.m
+/// app's decorative palette. Source: ghfjdksl1234/mac_mouse_helper, GrandCircleView.m
 /// at a563e689a06d3b6226e63cadc0813b321e9cbd73.
 enum LocatorAppearance {
     static let duration: TimeInterval = 1.5
