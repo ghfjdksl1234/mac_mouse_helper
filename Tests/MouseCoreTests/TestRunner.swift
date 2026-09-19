@@ -48,7 +48,10 @@ func XCTUnwrap<T>(_ value: T?, file: StaticString = #filePath, line: UInt = #lin
             ("Straight movement and jitter", suite.testStraightMovementAndTinyJitterAreNotShakes),
             ("Vertical shake and sample expiry", suite.testVerticalShakingAndWindowExpiry),
             ("Shared coordinate guides", suite.testGuidesUseSharedCoordinatesAndOffset),
-            ("Physical spacing on unlike displays", suite.testPhysicalGuidesRespectDifferentPixelDensities)
+            ("Physical spacing on unlike displays", suite.testPhysicalGuidesRespectDifferentPixelDensities),
+            ("Feature permission requirements", suite.testFeaturePermissionRequirements),
+            ("Permission flow and grants", suite.testPermissionFlowAdvancesOnlyAfterGrant),
+            ("Permission retry, cancellation and shared setup", suite.testPermissionRetryCancellationAndSharedSetup)
         ]
         for (name, test) in tests {
             let before = failures

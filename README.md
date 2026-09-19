@@ -46,6 +46,8 @@ For a Developer ID build, set `SIGNING_IDENTITY` to your signing identity. Notar
 
 Open **Settings → General** in the app:
 
+Shake recognition and crossing assistance are **off on a fresh install**. Turning either feature on from the menu bar, Overview, or its Settings page opens the needed macOS permission page with the draggable app helper. Crossing requests Input Monitoring first, then Accessibility once Input Monitoring is granted. A dash in the menu means the requested feature is waiting for permission; a checkmark means its required permissions are granted. Click a pending menu item again to cancel setup. Permission polling never repeatedly opens System Settings after a denial.
+
 1. Enable **Input Monitoring** in macOS System Settings to observe mouse movement and its delta at display edges.
 2. Enable **Accessibility** to allow assisted pointer movement.
 3. If macOS asks to quit and reopen, do so. Otherwise access is detected automatically within two seconds.
@@ -54,7 +56,7 @@ The **Enable…** buttons also open a small floating helper with a **draggable a
 
 The same helper is available from **Drag app to Input Monitoring…** and **Drag app to Accessibility…**. If a macOS version doesn't accept dropping into the list, use **Show in Finder**, or **Copy app path**, then click **+** in System Settings and press **Shift–Command–G** to paste that path. The app never grants its own permissions or treats a completed drag as proof of authorization.
 
-The app never requests permissions at launch; the Enable buttons start the system's consent flow. Locator previews and alignment guides work without permissions. Global shortcuts use Carbon hotkey registration, so the app doesn't monitor typing. macOS's own “Shake mouse pointer to locate” option may enlarge the cursor alongside this app's locator; either behavior can be used independently.
+The app never requests permissions at launch; enabling a feature or pressing an Enable button starts setup. Locator previews and alignment guides work without permissions. Global shortcuts use Carbon hotkey registration, so the app doesn't monitor typing. macOS's own “Shake mouse pointer to locate” option may enlarge the cursor alongside this app's locator; either behavior can be used independently.
 
 Launch at login is optional and uses Apple's `SMAppService`. Enable or disable it in **General → Launch at login** or directly in the status-item menu. When enabled, the utility starts when you sign in after starting or restarting your Mac. Login launches stay quietly in the menu bar; Settings is not restored automatically. The app has no Dock icon and closing Settings leaves it running. macOS may require approval in Login Items, which the app reports explicitly.
 

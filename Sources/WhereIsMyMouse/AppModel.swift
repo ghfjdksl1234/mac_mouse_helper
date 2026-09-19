@@ -19,7 +19,7 @@ enum SettingsPage: String, CaseIterable, Identifiable {
 }
 
 final class AppModel: ObservableObject {
-    let settings = Settings()
+    let settings: Settings
     let displays = DisplayManager()
     private let mouse = MouseMonitor()
     private let hotKeys = HotKeys()
@@ -39,12 +39,22 @@ final class AppModel: ObservableObject {
     private var subscriptions: Set<AnyCancellable> = []
     private var observers: [NSObjectProtocol] = []
     private var sleeping = false
+    private var permissionFlow = FeaturePermissionFlow()
+
+    init(settings: Settings = Settings()) { self.settings = settings }
+
+    private var permissions: MousePermissions {
+        MousePermissions(inputMonitoring: inputAllowed, accessibility: accessibilityAllowed)
+    }
+    var locateReady: Bool { settings.locateEnabled && permissions.missing(for: .locate) == nil }
+    var crossingReady: Bool { settings.crossingEnabled && permissions.missing(for: .crossing) == nil }
 
     var status: String {
         if settings.paused { return "Paused" }
         if !settings.locateEnabled && !settings.crossingEnabled { return "Helpers switched off" }
-        if !monitoring { return "Setup needed" }
+        if !inputAllowed { return "Input Monitoring needed" }
         if settings.crossingEnabled && !accessibilityAllowed { return "Accessibility needed" }
+        if !monitoring { return "Setup needed" }
         return "Ready when you are"
     }
 
@@ -93,8 +103,8 @@ final class AppModel: ObservableObject {
         guard !settings.paused, !sleeping else { return }
         // Do not teleport a drag, selected text, or a resize gesture.
         guard !dragging else { shake.reset(); edge.reset(); return }
-        if settings.locateEnabled && shake.consume(sample, sensitivity: settings.shakeSensitivity) { overlays.locate() }
-        if settings.crossingEnabled && accessibilityAllowed,
+        if locateReady && shake.consume(sample, sensitivity: settings.shakeSensitivity) { overlays.locate() }
+        if crossingReady,
            let crossing = edge.consume(sample, displays: displays.displays, resistance: settings.edgeResistance) {
             let result = CGWarpMouseCursorPosition(crossing.destination)
             if result == .success {
@@ -112,8 +122,9 @@ final class AppModel: ObservableObject {
         let access = AXIsProcessTrusted()
         if inputAllowed != input { inputAllowed = input }
         if accessibilityAllowed != access { accessibilityAllowed = access }
-        let needsMotion = settings.locateEnabled || settings.crossingEnabled
-        if !sleeping && !settings.paused && needsMotion && (input || access) { _ = mouse.start() }
+        settings.migrateFeaturePermissions(inputMonitoring: input, accessibility: access)
+        let needsMotion = locateReady || crossingReady
+        if !sleeping && !settings.paused && needsMotion { _ = mouse.start() }
         else { mouse.stop() }
         if monitoring != mouse.isRunning { monitoring = mouse.isRunning; onStateChange?() }
         let loginStatus = SMAppService.mainApp.status
@@ -124,6 +135,39 @@ final class AppModel: ObservableObject {
         if loginNeedsApproval != approval { loginNeedsApproval = approval }
         if loginChanged { onStateChange?() }
         if previousStatus != status { onStateChange?() }
+        let wasWaiting = permissionFlow.isWaiting
+        let next = permissionFlow.permissionsChanged(permissions)
+        if let next { presentPermission(next) }
+        else if wasWaiting && !permissionFlow.isWaiting { permissionSetup.close() }
+    }
+
+    func setLocateEnabled(_ enabled: Bool) { setFeature(.locate, enabled: enabled) }
+    func setCrossingEnabled(_ enabled: Bool) { setFeature(.crossing, enabled: enabled) }
+
+    private func setFeature(_ feature: MouseFeature, enabled: Bool) {
+        if !enabled { permissionFlow.cancel(feature) }
+        // Refresh before changing preferences so the one-time legacy migration
+        // cannot erase the user's new opt-in.
+        refreshPermissions()
+        if feature == .locate { settings.locateEnabled = enabled }
+        else { settings.crossingEnabled = enabled }
+        if enabled {
+            if let permission = permissionFlow.begin(feature, permissions: permissions) {
+                selectedPage = .general
+                presentPermission(permission)
+            }
+        } else {
+            permissionFlow.cancel(feature)
+            if !permissionFlow.isWaiting { permissionSetup.close() }
+        }
+        onStateChange?()
+    }
+
+    private func presentPermission(_ permission: MousePermission) {
+        switch permission {
+        case .inputMonitoring: requestInput()
+        case .accessibility: requestAccessibility()
+        }
     }
     func requestInput() {
         _ = CGRequestListenEventAccess()

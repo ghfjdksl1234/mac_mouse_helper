@@ -27,13 +27,13 @@ GitHub-hosted macOS jobs in private repositories use the account's Actions allow
 
 1. Merge the desired changes into `master` and wait for a successful build.
 2. Set `CFBundleShortVersionString` and increment `CFBundleVersion` in `Resources/Info.plist`; commit and push those changes.
-3. Tag that commit with `v` followed by the exact short version, then push the tag. For the current version, the tag would be `v1.0.2`:
+3. Tag that commit with `v` followed by the exact short version, then push the tag. For the current version, the tag would be `v1.0.3`:
 
 ```sh
 git switch master
 git pull --ff-only
-git tag v1.0.2
-git push origin v1.0.2
+git tag v1.0.3
+git push origin v1.0.3
 ```
 
 The workflow checks the tag against the app version, builds the app, and creates a **draft** release containing the ZIP and checksum. Review its notes and click **Publish release** when ready. A rerun can refresh a draft's assets, but refuses to replace assets of an already published release. Never reuse a published version tag for a different build.

@@ -5,6 +5,11 @@ Use the packaged app, preferably from a stable location in Applications. Keep on
 ## Permissions and lifecycle
 
 - A first launch shows settings without prompting for permissions. Previews and guides work immediately.
+- On a fresh profile, Shake to locate and Help crossing displays are unchecked in the menu and off on Overview and feature pages.
+- Enable each feature from each of those three locations while permission is missing. System Settings and the draggable helper must open. A pending menu item shows a dash, then a check after the required permissions are granted. Turning it off cancels setup.
+- For crossing with neither permission, Input Monitoring opens first; after granting it while the app stays running, Accessibility opens next. Denying or closing a permission prompt must not cause repeated prompts. Toggle off and on to retry, including after a prior version was denied. If macOS requires a restart, finish any remaining permission from General.
+- Upgrading an older installation without permissions clears its old automatic feature defaults once. Working, authorized features and unrelated preferences remain unchanged.
+- On macOS Tahoe, verify every status-menu title has the same left edge, including Launch at login, Settings, and Quit. Quit must still work with the menu and Command-Q.
 - Enable Input Monitoring and Accessibility from General. After granting access (and reopening if macOS requests it), automatic helpers work while another app is focused.
 - Revoke access: General reflects the change, and crossing no longer occurs.
 - Use the floating permission helper with System Settings frontmost: drag the app tile into Input Monitoring. Verify the exact installed `.app` is supplied and the original app remains in place. A drop must not be treated as authorization until macOS reports permission granted. Repeat for Accessibility.

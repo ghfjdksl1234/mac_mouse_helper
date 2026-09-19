@@ -53,3 +53,12 @@ The test suite validates the detection and geometry logic. It does **not** prove
 - Compiled both Apple Silicon and Intel release binaries using separate SwiftPM caches, combined them into a universal executable, and verified both architecture slices with `lipo`.
 - Verified the app's Info.plist and ad-hoc signature, created the downloadable ZIP and SHA-256 checksum, extracted it, and checked the extracted app's executable permission, architecture slices, and signature.
 - Developer ID signing, notarization, native Intel execution, physical gestures, and macOS permission prompts are outside these CI/package checks.
+
+## Fresh defaults, permission setup, and menu alignment (1.0.3)
+
+- Core suite: 16 tests, 231 assertions, zero failures. New cases cover permission requirements, ordered grants, denial without repeated prompts, explicit retries, cancellation, and shared setup.
+- Isolated preferences checks: 10 assertions, zero failures. Fresh features stay off even when permission exists; migration clears unsupported legacy defaults once and preserves working features, unrelated settings, and later opt-ins.
+- Universal build and ZIP extraction/signature/architecture verification passed.
+- Native smoke test uses an isolated preference suite and verifies fresh features are unchecked and all menu indentation levels are zero. The status-menu Quit action now uses an app-owned selector so Tahoe does not add a lone standard-action icon column to the last section. The main application menu retains its standard Quit action.
+- Enabling either feature from the status menu or either Settings location calls the same permission setup methods, including opening the System Settings pane directly after a prior denial. Old macOS registration is not needed to explain the original failure: the old toggle handlers never called those methods.
+- Real OS permission grants, reopening after macOS requests a restart, and final visual menu alignment are manual acceptance checks in `docs/TESTING.md`. No privacy grants or installed-app preferences were changed by these checks.

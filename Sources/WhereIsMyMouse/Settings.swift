@@ -8,7 +8,7 @@ enum GuideMode: String, CaseIterable, Identifiable {
 }
 
 final class Settings: ObservableObject {
-    private let defaults = UserDefaults.standard
+    private let defaults: UserDefaults
     @Published var locateEnabled: Bool { didSet { save() } }
     @Published var crossingEnabled: Bool { didSet { save() } }
     @Published var enlargeEnabled: Bool { didSet { save() } }
@@ -25,8 +25,9 @@ final class Settings: ObservableObject {
     @Published var guidesVisible = false
     @Published var paused = false
 
-    init() {
-        defaults.register(defaults: ["locate": true, "crossing": true, "enlarge": true,
+    init(defaults: UserDefaults = .standard) {
+        self.defaults = defaults
+        defaults.register(defaults: ["locate": false, "crossing": false, "enlarge": true,
             "sensitivity": 0.5, "resistance": 0.5, "pointerScale": 2.8, "highlightDuration": 1.2,
             "guideCount": GuideAppearance.defaultCount, "guideSpacing": GuideAppearance.defaultSpacing,
             "guideThickness": GuideAppearance.defaultThickness, "guideOffset": 0.0,
@@ -54,6 +55,15 @@ final class Settings: ObservableObject {
         guideOffset = defaults.double(forKey: "guideOffset")
         guideMode = GuideMode(rawValue: defaults.string(forKey: "guideMode") ?? "") ?? .physical
         guideLabels = defaults.bool(forKey: "guideLabels")
+    }
+
+    func migrateFeaturePermissions(inputMonitoring: Bool, accessibility: Bool) {
+        guard !defaults.bool(forKey: "permissionAwareFeaturesIntroduced") else { return }
+        // Earlier versions enabled both features before asking for consent.
+        // Keep working installations enabled; clear unsupported legacy defaults.
+        if !inputMonitoring { locateEnabled = false }
+        if !inputMonitoring || !accessibility { crossingEnabled = false }
+        defaults.set(true, forKey: "permissionAwareFeaturesIntroduced")
     }
 
     private func save() {
